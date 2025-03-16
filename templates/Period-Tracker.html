@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom</title>
+    <link rel="stylesheet" href="css/period-traker.css">
+
+</head>
+
+<body>
+    <div class="app-container">
+
+        <div class="header">
+            <div>
+                <img src="Images/logo .png" alt="logo" class="logo">
+            </div>
+            <div class="left-header">
+                <p class="home">Home</p>
+                <img src="Images/profile.png" alt="prf" class="profile">
+            </div>
+
+        </div>
+
+        <div class="body">
+
+
+
+            <div clas="rightbody">
+                <div class="up">
+                    <p>Today is the second day of your cycle. Stay hydrated and take it easy! 💜
+                        Menstrual cramps? Try a warm drink or light stretching to ease discomfort. 🌿</p>
+                </div>
+                <div class="down ">
+                    <div class="down-down">
+                        <div class="down-down-up">
+                            <!-- Flow Section -->
+                            <div class="section">
+                                <h3>How is your flow today?</h3>
+                                <div class="options">
+                                    <div class="option"><input type="radio" name="flow" value="Light">Light</div>
+                                    <div class="option"><input type="radio" name="flow" value="Medium">Medium</div>
+                                    <div class="option"><input type="radio" name="flow" value="Heavy">Heavy</div>
+                                    <div class="option"><input type="radio" name="flow" value="Very Heavy">Very Heavy
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pain Section -->
+                            <div class="section">
+                                <h3>How much pain are you experiencing?</h3>
+                                <div class="options">
+                                    <div class="option"><input type="radio" name="pain" value="No Pain">No Pain</div>
+                                    <div class="option"><input type="radio" name="pain" value="Mild">Mild</div>
+                                    <div class="option"><input type="radio" name="pain" value="Moderate">Moderate</div>
+                                    <div class="option"><input type="radio" name="pain" value="Severe">Severe</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="down-down-down">
+                            <!-- Mood Section -->
+                            <div class="section">
+                                <h3>How’s your mood today?</h3>
+                                <div class="options">
+                                    <div class="option"><input type="radio" name="mood" value="Happy">😊 Happy</div>
+                                    <div class="option"><input type="radio" name="mood" value="Calm">😌 Calm</div>
+                                    <div class="option"><input type="radio" name="mood" value="Irritable">😠 Irritable
+                                    </div>
+                                    <div class="option"><input type="radio" name="mood" value="Emotional">😢 Emotional
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Symptoms -->
+                            <div class="pain-symptoms-container">
+                                <h3>Do you have any additional symptoms?</h3>
+                                <div class="options">
+                                    <div class="checkbox-option"><input type="checkbox" value="Fatigue">Fatigue</div>
+                                    <div class="checkbox-option"><input type="checkbox" value="Cramps">Cramps</div>
+                                    <div class="checkbox-option"><input type="checkbox" value="Bloating">Bloating</div>
+                                    <div class="checkbox-option"><input type="checkbox" value="Headache">Headache</div>
+                                    <div class="checkbox-option"><input type="checkbox" value="Nausea">Nausea</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="submitBtn">Submit</button>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="calendar">
+                <p class="cycle-calendar">Cycle Calendar</p>
+                <iframe src="https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID" style="border: 0"
+                    background-color="white" width="800" height="600" frameborder="0" scrolling="no" class="google-cal">
+                </iframe>
+            </div>
+
+        </div>
+
+        <div class="graph-body">
+            <div class="info">
+                <p>1.<i>Your cycle has a lot of variations – </i>If your cycle length fluctuates significantly, tracking
+                    it can help identify patterns.</p>
+                <p>2.<i>Your cycles are getting longer –</i> This might be due to stress, hormonal shifts, or lifestyle
+                    changes. Try relaxation techniques like yoga.</p>
+                <p>3.<i>Your cycle peaked at its longest –</i> A sudden increase in cycle length could indicate hormonal
+                    imbalances. Keep an eye on it.</p>
+                <p>4.<i>Your cycles are now getting shorter – </i>If your cycle length is reducing after a peak, it
+                    might
+                    be returning to a normal pattern.</p>
+                <p>5.<i>Stress may be affecting your cycle –</i> Consider mindfulness, meditation, or light exercise to
+                    maintain balance.</p>
+                <p>6.<i>Diet matters! – </i>Nutritional deficiencies can impact your cycle. Ensure you’re eating a
+                    balanced diet.</p>
+                <p>7.<i>Hormonal changes could be the reason – </i>Birth control, PCOS, or perimenopause might
+                    contribute
+                    to cycle changes.</p>
+                <p>8.<i>Listen to your body –</i> If you feel unusual symptoms like extreme cramps, fatigue, or heavy
+                    bleeding, seek medical advice.
+                </p>
+
+            </div>
+
+            <div class="chart-container">
+                <canvas id="myChart" width="500" height="300"></canvas>
+            </div>
+
+
+            <!-- Include Chart.js and script for the graph -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <canvas id="myChart"></canvas>
+            <script>
+                // Generate X-axis values for 12 cycles (Cycle Numbers)
+                const cycleNumbers = Array.from({ length: 12 }, (_, i) => i + 1);
+
+                // Generate Y-axis values (Days in Cycle) in a triangular pattern between 25 and 38
+                let actualCycleDays = [];
+                const midPoint = Math.floor(cycleNumbers.length / 2);
+
+                // Start a bit higher than 25, create a triangular pattern between 25 and 38
+                const minDays = 25;
+                const maxDays = 38;
+
+                // Increase days for the first half
+                for (let i = 0; i <= midPoint; i++) {
+                    actualCycleDays.push(minDays + (i * (maxDays - minDays) / midPoint));
+                }
+
+                // Decrease days for the second half
+                for (let i = midPoint + 1; i < cycleNumbers.length; i++) {
+                    actualCycleDays.push(maxDays - ((i - midPoint) * (maxDays - minDays) / midPoint));
+                }
+
+                // Expected cycle is a straight line at 28 for each cycle number
+                const expectedCycleDays = Array(12).fill(28);
+
+                // Create the chart
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: cycleNumbers,  // X-axis: Cycle Numbers
+                        datasets: [
+                            {
+                                label: 'Actual Cycle',
+                                data: actualCycleDays,
+                                borderColor: 'pink',
+                                backgroundColor: 'rgba(255, 182, 193, 0.2)',
+                                fill: true,
+                                tension: 0.1,
+                                pointRadius: 5,
+                                pointBackgroundColor: 'pink'
+                            },
+                            {
+                                label: 'Expected Cycle',
+                                data: expectedCycleDays,
+                                borderColor: '#8b4e7d',  // Updated color
+                                borderDash: [10, 5],  // Dashed line for expected
+                                tension: 0,
+                                pointRadius: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                align: 'end',  // Move to the top-right
+                                labels: {
+                                    usePointStyle: true,
+                                    pointStyle: 'line'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Cycle Number'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Days in Cycle'
+                                },
+                                min: 20,
+                                max: 45
+                            }
+                        }
+                    }
+                });
+            </script>
+
+        </div>
+        <div class="next">
+            <p id="ptag1">Your next cycle is</p>
+            <p id="ptag2"><bpsk>expected on <b>28 JULY</b></bpsk></p>
+        </div>
+        
+        
+
+    </div>
+
+
+</body>
+
+</html>
