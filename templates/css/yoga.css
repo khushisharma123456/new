@@ -12,13 +12,33 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
-    background-color: rgba(140, 82, 123, 0.9);
+    padding: 10px 40px; /* Reduce padding */
+    background-color: #8B4E7D;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-    z-index: 2;
-    height: 80px;
+    height: 60px; /* Reduce header height */
 }
+
+.home {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    top: -2px; /* Minor adjustment */
+}
+
+.left-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile {
+    width: 35px; /* Increase profile image size */
+    height: 35px;
+}
+
+
 
 .logo {
     display: flex;
@@ -342,4 +362,6 @@ body {
     font-weight: bold;
     color:black;
 }
+
+
 
