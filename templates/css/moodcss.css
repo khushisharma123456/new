@@ -3,7 +3,7 @@
 }
 /* Set the background image for the whole body */
 body {
-    background: url('/assets/Background.jpg') no-repeat center center;
+    background: url('../Images/Background.jpg') no-repeat center center;
     background-size: cover;  /* Ensure the image covers the entire background */
     margin: 0; /* Optional: Remove any default margin */
     height: 100vh; /* Optional: Ensure the body takes up the full viewport height */
