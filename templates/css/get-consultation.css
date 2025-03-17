@@ -19,6 +19,7 @@ body {
     background-color: #f9f2f8;
     background-image: url("../Images/Background.jpg");
     color: var(--text-dark);
+    background-size: cover;
 }
 
 header {
