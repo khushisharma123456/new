@@ -1,3 +1,10 @@
+:root {
+    --mood-happy: #78E08F;
+    --mood-content: #6A89CC;
+    --mood-neutral: #F8C291;
+    --mood-sad: #E55039;
+    --mood-angry: #C0392B;
+}
 * {
     font-family: 'Segoe UI', sans-serif;
 }
@@ -24,15 +31,18 @@ body {
     width:60px;
     margin-top:10px;
 }
-.home{
+.home {
     font-weight: bold;
     font-size: x-large;
-    margin-top:-100px;
-    margin-right: 10px;
-    font-display: initial;
+    margin-top: 15px;
+    color: black;
     text-decoration: none;
-    margin-bottom: 500px;
+    position: fixed;
+    right: 110px;
+    bottom: 645px;
+    position:absolute;
 }
+
 
 .app-container {
     width: 100%;
@@ -63,8 +73,7 @@ body {
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: var(--card-shadow);
-    
+    box-shadow: var(--card-shadow);   
 }
 
 
@@ -100,21 +109,21 @@ header {
 }
 
 .mood-grid {
-    display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-    margin-bottom: 25px;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto 25px;
+    display: grid;
 }
 
 .mood-option {
-    font-size: 3rem;
     cursor: pointer;
-    padding: 20px;
-    border-radius: 15px;
     text-align: center;
-    transition: all 0.3s ease;
-    background: rgba(139, 78, 125, 0.1);
-
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 2.5rem;
+    padding: 15px;
+    border-radius: 12px;
+    transition: all 0.2s, transform 0.1s;
 }
 
 .mood-option:hover {
@@ -136,7 +145,6 @@ header {
     padding: 15px;
     border: none;
     border-radius: 10px;
-    background: white;
     opacity:85%;
     resize: vertical;
     min-height: 100px;
@@ -321,37 +329,10 @@ header {
     transform: scale(1.1);
     z-index: 1;
 }
-
-/* Enhanced Mood Grid */
-.mood-grid {
-    gap: 10px;
-    max-width: 600px;
-    margin: 0 auto 25px;
-}
-
-.mood-option {
-    font-size: 2.5rem;
-    padding: 15px;
-    border-radius: 12px;
-    transition: all 0.2s, transform 0.1s;
-    background-color: azure;
-    opacity: 80%;
-}
-
-.mood-option:active {
-    transform: scale(0.95);
-    
-}
-
-/* Improved Progress Bar */
-.progress-bar {
-    height: 20px;
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.progress-segment {
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+.history-container{
+    height: 500px;
+    width:70%;
+    margin-left: 200px;
 }
 
 /* Footer Styles */
