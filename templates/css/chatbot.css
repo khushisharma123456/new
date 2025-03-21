@@ -1,3 +1,7 @@
+* {
+    overflow-wrap: break-word; /* Ensures long words wrap and do not overflow */
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -16,7 +20,7 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     margin: 0;
     padding: 0;
-    background: url('Background.jpg') no-repeat center center;
+    background: url('../Images/Background.png') no-repeat center center;
     background-size: cover;
 }
 .home{
@@ -65,11 +69,11 @@
     background-color:white;
     height:80px;
     position: top;
-    border-radius: 20px;
-    width:850px;
+    border-radius: 8px;
+    width:1040px;
     margin-top: 20px;
 }
-.body,.up{
+.body,.up,.up-down{
     display: flex;
 }
 .down{
@@ -85,7 +89,7 @@
     width:65px;
     border-radius: 8px;
     margin-right: 10px;
-    margin-left: 10px;
+    margin-left: 200px;
 
 }
 .button:hover,
@@ -151,11 +155,17 @@
     font-size: 20px;
     cursor: pointer;
     margin-left: 10px;
+    transition: 0.25s ease;
+}
+.input-area button:active{
+    transform: scale(0.9);
+
 }
 
-/* Icon */
-.input-area i {
-    color: #601893;
+.send-button:active{
+    opacity:0.1;
+    background: black;
+    pointer-events: none;
 }
 
 /* Container */
@@ -178,4 +188,25 @@
 .left p:hover,
 .left p:active {
     text-decoration: underline;
+}
+
+.up-down{
+    margin-top: 45px;
+    margin-left:84%;
+    background-color: white;
+    border-radius:20px ;
+    padding-left: 10px;
+    align-items: center;
+
+}
+#second{
+    margin-left: 10px;
+    margin-top: 22.5px;
+    color: #601893;
+    font-weight: 040;
+
+}
+.content{
+    overflow:auto;
+
 }

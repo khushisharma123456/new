@@ -42,22 +42,29 @@
                 <div></div>
             </div>
             <div class="right">
-                <div class="ai-prompt">
+                <div class="ai-prompt" id="content">
                     <div class="up">
-                        <img src="ai-logo.png" alt="ai-logo" class="ai-logo">
+                        <img src="Images/logo1.png" alt="ai-logo" class="ai-logo">
                         <p id="first">Hi, How can I help you?</p>
                     </div>
+                    
                     <div class="down">
                         <button class="button"><i class="fa-solid fa-copy" class="copy"></i>Copy</button>
                     </div>
+
                 </div>
+                <!--<div class="up-down" id = "content">
+                    <img src="Images/ai-logo.png" alt="ai-logo" class="ai-logo">
+                    <p id="second">Hello!</p>
+                </div>-->
                 <div class="input-area">
-                    <input type="text" id="userInput" placeholder="Type a message...">
-                    <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                    <input type="text" class="chat-input" id="userInput" placeholder="Type a message..." autocomplete="off">
+                    <button onclick="sendMessage()" class="send-button"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
     </div>
+    <script src="css/chatbotjs.js"></script>
 
 </body>
 
