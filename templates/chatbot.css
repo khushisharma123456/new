@@ -1,0 +1,181 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #8B4E7D;
+    color: white;
+    width: 100%; /* Corrected */
+} 
+ 
+.app-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow-y: auto; /* Allows vertical scrolling */
+    overflow-x: visible; /* Prevents horizontal scrolling */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin: 0;
+    padding: 0;
+    background: url('Background.jpg') no-repeat center center;
+    background-size: cover;
+}
+.home{
+    font-weight: bold;
+    font-size: x-large;
+    margin-top:15px;
+    margin-right: 30px;
+    text-decoration: none;
+    font-display: initial;
+    color: azure;
+}
+.logo{
+    margin-left:40px;
+    margin-top: -10px;
+}
+.profile{
+    height:50px;
+    width:60px;
+    margin-top: 1.5px;
+    margin-right: 30px;
+    cursor: pointer;
+}
+.left-header{
+    display:flex;
+}
+.left{
+    text-align: left;
+    height:100px;
+    width:250px;
+    margin-left:30px;
+    color: #5A5959;
+}
+.line{
+    margin-left:50px;
+    width: 0%;
+    height: 100vh;
+    border: 1.5px solid black;
+    background-color: azure;
+    margin-top: 0px;
+}
+.right{
+    margin-left: 20px;
+    margin-top: 4px
+}
+.ai-prompt{
+    background-color:white;
+    height:80px;
+    position: top;
+    border-radius: 20px;
+    width:850px;
+    margin-top: 20px;
+}
+.body,.up{
+    display: flex;
+}
+.down{
+    margin-left: 750px;
+}
+.button{
+    margin-top: -20px;
+    position: absolute;
+    padding:5px;
+    background-color:#601893;
+    color: white;
+    height: 30px;
+    width:65px;
+    border-radius: 8px;
+    margin-right: 10px;
+    margin-left: 10px;
+
+}
+.button:hover,
+.button:active {
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.2s ease;
+}
+
+.ai-logo{
+    height:50px;
+    width: 50px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+#first{
+    margin-left: 10px;
+    margin-top: 20px;
+    color: #601893;
+    font-weight: 040;
+}
+.copy{
+    margin-right: 10px;
+}
+
+.input-area {
+    position: fixed;
+    bottom: 10px;
+    left: 61.5%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1050px;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 5px 15px;
+}
+
+/* Input Field */
+.input-area input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding: 12px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    color: #601893;
+}
+
+/* Custom Placeholder Color */
+.input-area input::placeholder {
+    color: #601893;
+    opacity: 0.7;
+}
+
+/* Send Button */
+.input-area button {
+    background: none;
+    border: none;
+    color: #601893;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Icon */
+.input-area i {
+    color: #601893;
+}
+
+/* Container */
+.left {
+    padding: 20px;
+}
+
+/* Headings and Paragraphs */
+.left h3{
+    margin: 10px 0;
+    transition: text-decoration 0.2s ease;
+}
+.left p {
+    margin: 10px 0;
+    cursor: pointer;
+    transition: text-decoration 0.2s ease;
+}
+
+/* Hover and Click Effect */
+.left p:hover,
+.left p:active {
+    text-decoration: underline;
+}
