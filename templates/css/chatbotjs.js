@@ -1,26 +1,19 @@
-const API_KEY = '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'
+const API_KEY = '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'
 
 // Initialize content area and input fields
 document.addEventListener('DOMContentLoaded', function() {
     // Get elements after DOM is fully loaded
     const content = document.getElementById('content');
     const userInput = document.getElementById('userInput');
-    
-    // This line is updated to select any element that might be your send arrow
-    // Adjust the selector based on your actual HTML structure - this covers several common possibilities
-    const sendButton = document.querySelector('.send-button, .send-arrow, button[type="submit"], .fa-arrow-right, .send-icon');
+    const sendButton = document.querySelector('.send-button');
 
     let isAnswerLoading = false;
     let answerSectionId = 0;
 
     // Add event listeners
-    if (sendButton) {
-        sendButton.addEventListener('click', function() {
-            sendMessage();
-        });
-    } else {
-        console.warn('Send button not found. Check your HTML structure and class names.');
-    }
+    sendButton.addEventListener('click', function() {
+        sendMessage();
+    });
 
     userInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
@@ -62,21 +55,18 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     function addUserMessage(message) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'up-down';
-
-        // Using Font Awesome icon instead of image
-        const userIcon = document.createElement('i');
-        userIcon.className = 'fas fa-user-circle ai-logo'; // Using Font Awesome icon
+        // Create the entire message with inline HTML including the icon
+        const messageHTML = `
+            <div class="up-down" style="display: flex; align-items: flex-start; width: 100%; margin-bottom: 10px;">
+                <div style="width: 35px; height: 35px; min-width: 35px; margin-right: 10px; margin-top: 15px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user-circle" style="font-size: 35px; color: #000000;"></i>
+                </div>
+                <p id="second" style="margin: 0; word-wrap: break-word;">${message}</p>
+            </div>
+        `;
         
-        const messageText = document.createElement('p');
-        messageText.textContent = message;
-        messageText.id = 'second';
-        
-        messageDiv.appendChild(userIcon);
-        messageDiv.appendChild(messageText);
-        
-        content.appendChild(messageDiv);
+        // Add the HTML to the content
+        content.insertAdjacentHTML('beforeend', messageHTML);
         scrollToBottom();
     }
 
@@ -154,6 +144,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function getAnswer(question) {
+        // Log the request for debugging
+        console.log("Sending request to API with question:", question);
+        
         fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
             headers: {
@@ -178,18 +171,28 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         })
         .then(response => {
+            console.log("Response status:", response.status);
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                return response.text().then(text => {
+                    throw new Error(`API Error (${response.status}): ${text}`);
+                });
             }
             return response.json();
         })
         .then(data => {
+            console.log("API response data:", data);
+            // Validate response structure
+            if (!data || !data.choices || !data.choices[0] || !data.choices[0].message || !data.choices[0].message.content) {
+                throw new Error("Invalid response format from API");
+            }
+            
             const resultData = data.choices[0].message.content;
             updateAnswerSection(resultData);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            updateAnswerSection("Sorry, something went wrong. Please try again.");
+            // Show more detailed error message
+            updateAnswerSection(`Error: ${error.message || "Unknown error occurred"}`);
         })
         .finally(() => {
             isAnswerLoading = false;
