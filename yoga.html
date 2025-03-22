@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom - Period-Friendly Fitness</title>
+    <style>
+        :root {
+            --primary: #f8d7da;
+            --secondary: #a92775;
+            --accent: #e83e8c;
+            --light: #fff5f5;
+            --dark: #343a40;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/api/placeholder/1200/600') center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #666;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-img {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-content {
+            padding: 20px;
+        }
+        
+        .feature-content h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .workout-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .workout-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .workout-img {
+            height: 180px;
+            background-color: #eee;
+        }
+        
+        .workout-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .workout-content h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .workout-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .testimonials {
+            background-color: var(--primary);
+            position: relative;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .author-info h4 {
+            color: var(--secondary);
+        }
+        
+        .author-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .cta {
+            background-color: var(--secondary);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            margin-bottom: 30px;
+        }
+        
+        .cta .btn {
+            background-color: white;
+            color: var(--secondary);
+        }
+        
+        .cta .btn:hover {
+            background-color: var(--primary);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        /* Vision AI Integration Styles */
+        .vision-ai-section {
+            background-color: #f8f9fa;
+        }
+
+        .vision-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .vision-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .webcam-feed {
+            width: 100%;
+            height: 400px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .pose-detection {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .controls {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .feedback-container {
+            width: 100%;
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .feedback-title {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feedback-content {
+            min-height: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Bloom</div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#workouts">Workouts</a></li>
+                    <li><a href="#vision-ai">Vision AI</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Customized Period-Friendly Fitness</h1>
+                <p>Gentle yoga poses, stretching exercises, and guided meditation sessions designed to alleviate cramps, reduce bloating, and improve your mood during menstruation.</p>
+                <a href="#workouts" class="btn">Explore Workouts</a>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="workouts" style="background-color: #fff5f5;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Period-Friendly Workouts</h2>
+                <p>Explore our collection of specialized workouts designed to alleviate discomfort and boost your mood during menstruation.</p>
+            </div>
+            <div class="workout-grid">
+                <div class="workout-card">
+                    <div class="workout-img">
+                        <img src="/api/placeholder/250/180" alt="Gentle Yoga">
+                    </div>
+                    <div class="workout-content">
+                        <h3>Gentle Flow Yoga</h3>
+                        <p>A sequence of gentle poses to relieve cramping and reduce lower back pain during your period.</p>
+                        <div class="workout-meta">
+                            <span>20 min</span>
+                            <span>Beginner</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="workout-card">
+                    <div class="workout-img">
+                        <img src="/api/placeholder/250/180" alt="Stretching">
+                    </div>
+                    <div class="workout-content">
+                        <h3>Hip-Opening Stretches</h3>
+                        <p>Focused stretching exercises that target the hips and pelvis to alleviate menstrual discomfort.</p>
+                        <div class="workout-meta">
+                            <span>15 min</span>
+                            <span>All Levels</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="workout-card">
+                    <div class="workout-img">
+                        <img src="/api/placeholder/250/180" alt="Meditation">
+                    </div>
+                    <div class="workout-content">
+                        <h3>Calming Meditation</h3>
+                        <p>Guided meditation sessions focused on reducing anxiety and improving mood during menstruation.</p>
+                        <div class="workout-meta">
+                            <span>10 min</span>
+                            <span>All Levels</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="workout-card">
+                    <div class="workout-img">
+                        <img src="/api/placeholder/250/180" alt="Breathing">
+                    </div>
+                    <div class="workout-content">
+                        <h3>Deep Breathing Techniques</h3>
+                        <p>Specialized breathing exercises to reduce cramps and promote relaxation during your period.</p>
+                        <div class="workout-meta">
+                            <span>8 min</span>
+                            <span>All Levels</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision-ai" class="vision-ai-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Vision AI Pose Correction</h2>
+                <p>Our computer vision technology provides real-time feedback on your exercise form to ensure safety and effectiveness.</p>
+            </div>
+            <div class="vision-demo">
+                <div class="vision-container">
+                    <div class="webcam-feed">
+                        <div>Webcam Preview (Turn on camera to begin)</div>
+                    </div>
+                    <canvas class="pose-detection"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn" id="start-camera">Start Camera</button>
+                    <button class="btn" style="background-color: var(--secondary);">Begin Pose Analysis</button>
+                </div>
+                <div class="feedback-container">
+                    <div class="feedback-title">Real-Time Feedback:</div>
+                    <div class="feedback-content">Turn on your camera and select a pose to begin receiving AI-powered form correction.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>User Experiences</h2>
+                <p>Hear from our community about how FlowFit has helped them manage period discomfort and stay active.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The gentle yoga flows have been a game-changer for my menstrual cramps. I used to stay in bed all day, but now I actually look forward to these sessions!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="/api/placeholder/50/50" alt="User">
+                        <div class="author-info">
+                            <h4>Sarah M.</h4>
+                            <p>Member for 6 months</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The AI form correction has helped me so much. I was doing poses wrong and making my pain worse. Now I feel confident that I'm moving safely."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="/api/placeholder/50/50" alt="User">
+                        <div class="author-info">
+                            <h4>Jessica T.</h4>
+                            <p>Member for 3 months</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The meditation sessions have been transformative for my mood swings. I feel calmer and more balanced throughout my cycle now."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="/api/placeholder/50/50" alt="User">
+                        <div class="author-info">
+                            <h4>Emily K.</h4>
+                            <p>Member for 1 year</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Start Your Period-Friendly Fitness Journey</h2>
+                <p>Join thousands of others who have transformed their relationship with exercise during their menstrual cycle.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <p>Customized period-friendly workout routines designed to help you feel your best, even during menstruation.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#workouts">Workouts</a></li>
+                        <li><a href="#vision-ai">Vision AI</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                    </ul>
+                </div>
+               
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><a href="mailto:support@bloom.com">support@bloom.com</a></li>
+                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Bloom. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Add these before your closing </body> tag -->
+
+
+    <script>
+        // Access webcam and set up pose detection
+const startCameraBtn = document.getElementById('start-camera');
+const webcamFeed = document.querySelector('.webcam-feed');
+const poseCanvas = document.querySelector('.pose-detection');
+const feedbackContent = document.querySelector('.feedback-content');
+let video, poseDetectionModel, canvasContext;
+
+startCameraBtn.addEventListener('click', async function() {
+  try {
+    // Replace placeholder with actual video element
+    webcamFeed.innerHTML = '';
+    video = document.createElement('video');
+    video.style.width = '100%';
+    video.style.height = '100%';
+    webcamFeed.appendChild(video);
+    
+    // Access webcam
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: false
+    });
+    video.srcObject = stream;
+    video.play();
+    
+    // Set up canvas for drawing pose keypoints
+    canvasContext = poseCanvas.getContext('2d');
+    poseCanvas.width = webcamFeed.offsetWidth;
+    poseCanvas.height = webcamFeed.offsetHeight;
+    
+    // Load pose detection model (example using TensorFlow.js)
+    // Note: You need to include TensorFlow.js in your project
+    feedbackContent.textContent = 'Loading pose detection model...';
+    
+    // This is a placeholder - you need to actually load your model
+    // poseDetectionModel = await loadPoseDetectionModel();
+    
+    // Start pose detection
+    feedbackContent.textContent = 'AI analysis ready. Please perform a yoga pose.';
+    detectPose();
+    
+  } catch (error) {
+    console.error('Error accessing webcam:', error);
+    feedbackContent.textContent = 'Error accessing webcam. Please check permissions and try again.';
+  }
+});
+async function detectPose() {
+  if (!video || !poseDetectionModel) return;
+  
+  // Detect poses in the current video frame
+  // const poses = await poseDetectionModel.estimatePoses(video);
+  
+  // Clear previous drawings
+  canvasContext.clearRect(0, 0, poseCanvas.width, poseCanvas.height);
+  
+  // Draw detected keypoints and skeleton
+  // drawPose(poses[0]);
+  
+  // Analyze pose and provide feedback
+  // const feedback = analyzePose(poses[0]);
+  // feedbackContent.innerHTML = feedback;
+  
+  // Continue detection on next frame
+  requestAnimationFrame(detectPose);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const startCameraBtn = document.getElementById('start-camera');
+    const beginAnalysisBtn = document.querySelector('.controls .btn:nth-child(2)'); // Select the second button in controls
+    const webcamFeed = document.querySelector('.webcam-feed');
+    const feedbackContent = document.querySelector('.feedback-content');
+    let cameraActive = false;
+    
+    // Camera activation
+    startCameraBtn.addEventListener('click', function() {
+        if (webcamFeed.innerHTML.includes('Webcam Preview')) {
+            webcamFeed.innerHTML = '<div style="text-align: center; padding: 20px;">Camera activated (simulation)</div>';
+            feedbackContent.textContent = 'Camera is active. Click "Begin Pose Analysis" to start.';
+            cameraActive = true;
+        }
+    });
+    
+    // Begin pose analysis 
+    beginAnalysisBtn.addEventListener('click', function() {
+        if (!cameraActive) {
+            feedbackContent.textContent = 'Please activate the camera first.';
+            return;
+        }
+        
+        feedbackContent.textContent = 'Analyzing pose... Please hold your position.';
+        
+        // Simulate AI analysis after 2 seconds
+        setTimeout(() => {
+            feedbackContent.innerHTML = '<p><strong>Analyzing "Child\'s Pose":</strong></p>' +
+                                      '<p>✓ Knees are properly positioned</p>' +
+                                      '<p>⚠️ Try to relax your shoulders more</p>' +
+                                      '<p>✓ Breathing is steady and controlled</p>' +
+                                      '<p>Overall: Great form! This pose is excellent for reducing menstrual cramps.</p>';
+        }, 2000);
+    });
+});
+
+
+
+    </script>
+</body>
+</html>
