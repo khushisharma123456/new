@@ -1,0 +1,114 @@
+{
+    "nuskhe": [
+      {
+        "id": "ajwain_water",
+        "title": "Ajwain Water",
+        "image": "Images/cumin.png",
+        "description": "Boil 1 teaspoon of carom seeds (ajwain) in water and drink on an empty stomach. Helps reduce period cramps and bloating.",
+        "instructions": [
+          "Boil 1 teaspoon of ajwain seeds in a cup of water for 5 minutes.",
+          "Strain the water and let it cool slightly.",
+          "Drink it warm on an empty stomach."
+        ],
+        "benefits": [
+          "Reduces period cramps",
+          "Aids digestion",
+          "Relieves bloating"
+        ]
+      },
+      {
+        "id": "methi_seed_water",
+        "title": "Methi Seed Water",
+        "image": "Images/2.png",
+        "description": "Soak 1 teaspoon fenugreek (methi) seeds overnight and drink the water in the morning. Helps balance hormones and reduce inflammation.",
+        "instructions": [
+          "Soak 1 teaspoon of methi seeds in a cup of water overnight.",
+          "Strain the water and drink it in the morning."
+        ],
+        "benefits": [
+          "Balances hormones",
+          "Reduces inflammation",
+          "Aids digestion"
+        ]
+      },
+      {
+        "id": "ginger_tea",
+        "title": "Ginger Tea",
+        "image": "Images/ginger_tea.png",
+        "description": "Ginger tea helps in reducing menstrual pain and inflammation. It also aids digestion and boosts immunity.",
+        "instructions": [
+          "Boil 1 cup of water.",
+          "Add 1 teaspoon of grated ginger.",
+          "Let it simmer for 5 minutes.",
+          "Strain and drink warm."
+        ],
+        "benefits": [
+          "Reduces menstrual pain",
+          "Boosts immunity",
+          "Aids digestion"
+        ]
+      },
+      {
+        "id": "turmeric_milk",
+        "title": "Turmeric Milk",
+        "image": "Images/turmeric_milk.png",
+        "description": "Turmeric milk is known for its anti-inflammatory properties and helps relieve period cramps.",
+        "instructions": [
+          "Warm 1 cup of milk.",
+          "Add 1/2 teaspoon turmeric powder.",
+          "Stir well and drink before bedtime."
+        ],
+        "benefits": [
+          "Reduces inflammation",
+          "Relieves pain",
+          "Boosts immunity"
+        ]
+      },
+      {
+        "id": "cumin_water",
+        "title": "Cumin Water",
+        "image": "Images/cumin_water.png",
+        "description": "Cumin water aids digestion and relieves bloating and cramps during menstruation.",
+        "instructions": [
+          "Soak 1 teaspoon of cumin seeds in water overnight.",
+          "Strain and drink the water in the morning."
+        ],
+        "benefits": [
+          "Aids digestion",
+          "Reduces bloating",
+          "Relieves menstrual cramps"
+        ]
+      },
+      {
+        "id": "fennel_seed_water",
+        "title": "Fennel Seed Water",
+        "image": "Images/fennel_seed_water.png",
+        "description": "Fennel seed water helps regulate periods and relieves bloating.",
+        "instructions": [
+          "Soak 1 teaspoon of fennel seeds in a cup of water overnight.",
+          "Strain and drink in the morning."
+        ],
+        "benefits": [
+          "Regulates periods",
+          "Reduces bloating",
+          "Aids digestion"
+        ]
+      },
+      {
+        "id": "aloe_vera_juice",
+        "title": "Aloe Vera Juice",
+        "image": "Images/aloe_vera_juice.png",
+        "description": "Aloe vera juice helps balance hormones and improve digestion.",
+        "instructions": [
+          "Extract fresh aloe vera gel.",
+          "Blend with water and drink fresh."
+        ],
+        "benefits": [
+          "Balances hormones",
+          "Improves digestion",
+          "Boosts skin health"
+        ]
+      }
+    ]
+  }
+  

@@ -1,0 +1,132 @@
+{
+    "recipes": [
+      {
+        "title": "Quinoa Upma",
+        "image": "Images/1h.png",
+        "description": "A fiber-rich breakfast made with quinoa and mixed veggies that helps in balancing blood sugar levels and keeps you full for longer.",
+        "ingredients": [
+          "1 cup quinoa",
+          "1/2 cup mixed vegetables (carrot, peas, beans)",
+          "1 onion (chopped)",
+          "1 green chili (chopped)",
+          "1/2 tsp mustard seeds",
+          "1/2 tsp cumin seeds",
+          "1 tbsp oil",
+          "Salt to taste",
+          "1 cup water",
+          "Curry leaves (optional)"
+        ],
+        "instructions": [
+          "Rinse quinoa under water and drain.",
+          "Heat oil in a pan and add mustard seeds, cumin seeds, and curry leaves.",
+          "Add chopped onion and green chili, sauté until soft.",
+          "Add mixed vegetables and cook for 2-3 minutes.",
+          "Add quinoa, water, and salt. Cover and cook for 10-15 minutes until quinoa is fluffy.",
+          "Serve hot with yogurt or chutney."
+        ],
+        "benefits": [
+          "Rich in fiber and protein",
+          "Keeps blood sugar levels stable",
+          "Promotes digestion and gut health"
+        ]
+      },
+      {
+        "title": "Chia Seed Pudding",
+        "image": "Images/2h.png",
+        "description": "A nutritious dessert made with chia seeds, almond milk, cinnamon, and berries, rich in omega-3 and reduces inflammation.",
+        "ingredients": [
+          "1/4 cup chia seeds",
+          "1 cup almond milk",
+          "1 tsp honey or maple syrup",
+          "1/2 tsp cinnamon",
+          "1/2 cup mixed berries"
+        ],
+        "instructions": [
+          "In a jar, mix chia seeds, almond milk, cinnamon, and honey.",
+          "Stir well and refrigerate for at least 3 hours or overnight.",
+          "Stir again before serving and top with berries."
+        ],
+        "benefits": [
+          "Rich in omega-3 fatty acids",
+          "Helps reduce inflammation",
+          "Supports hormone balance"
+        ]
+      },
+      {
+        "title": "Spinach and Paneer Paratha",
+        "image": "Images/3h.png",
+        "description": "A healthy multigrain paratha filled with spinach and paneer, rich in iron and calcium, perfect for hormone regulation.",
+        "ingredients": [
+          "1 cup whole wheat flour",
+          "1/2 cup spinach (chopped)",
+          "1/2 cup paneer (crumbled)",
+          "1/2 tsp salt",
+          "1/2 tsp cumin powder",
+          "1/2 tsp garam masala",
+          "Water for kneading"
+        ],
+        "instructions": [
+          "Mix wheat flour with water to form a dough and let it rest for 15 minutes.",
+          "In a bowl, mix paneer, spinach, and spices.",
+          "Roll out small dough balls, stuff with filling, and roll into parathas.",
+          "Cook on a hot pan with a little oil until golden brown."
+        ],
+        "benefits": [
+          "Rich in iron and calcium",
+          "Supports hormone balance",
+          "Strengthens bones"
+        ]
+      },
+      {
+        "title": "Avocado and Quinoa Salad",
+        "image": "Images/5h.png",
+        "description": "A protein-packed, anti-inflammatory salad with avocado, quinoa, chickpeas, and lemon dressing that helps in balancing hormones.",
+        "ingredients": [
+          "1 cup cooked quinoa",
+          "1 avocado (chopped)",
+          "1/2 cup chickpeas",
+          "1/2 cup cherry tomatoes (halved)",
+          "1 tbsp olive oil",
+          "1 tbsp lemon juice",
+          "Salt and pepper to taste"
+        ],
+        "instructions": [
+          "Mix cooked quinoa, avocado, chickpeas, and cherry tomatoes in a bowl.",
+          "Drizzle with olive oil and lemon juice.",
+          "Season with salt and pepper.",
+          "Toss well and serve fresh."
+        ],
+        "benefits": [
+          "Rich in healthy fats and fiber",
+          "Supports digestive health",
+          "Balances hormones"
+        ]
+      },
+      {
+        "title": "Moong Dal Chilla",
+        "image": "Images/4h.png",
+        "description": "A lentil pancake made with moong dal and spices, rich in plant-based protein and good for gut health.",
+        "ingredients": [
+          "1 cup moong dal (soaked for 4 hours)",
+          "1 green chili",
+          "1/2 tsp cumin powder",
+          "1/2 tsp turmeric",
+          "Salt to taste",
+          "1 tbsp chopped coriander",
+          "Oil for cooking"
+        ],
+        "instructions": [
+          "Blend soaked moong dal with green chili, turmeric, cumin, and salt to form a batter.",
+          "Heat a pan, grease with oil, and spread the batter like a pancake.",
+          "Cook on both sides until golden brown.",
+          "Serve hot with chutney."
+        ],
+        "benefits": [
+          "High in plant-based protein",
+          "Improves digestion",
+          "Supports weight management"
+        ]
+      }
+    ]
+  }
+  
