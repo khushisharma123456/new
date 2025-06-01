@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= remedy.name %> - Bloom</title>
+    <link rel="stylesheet" href="/css/remedy.css">
+</head>
+<body>
+    <div class="remedy-detail-container">
+        <button class="back-btn" onclick="window.history.back()">← Back</button>
+        
+        <div class="remedy-header">
+            <% if (remedy.image) { %>
+                <img src="<%= remedy.image %>" alt="<%= remedy.name %>" class="remedy-image" onerror="this.src='/Images/default-remedy.png'">
+            <% } else { %>
+                <img src="/Images/default-remedy.png" alt="<%= remedy.name %>" class="remedy-image">
+            <% } %>
+            <div class="remedy-meta">
+                <h1><%= remedy.name %></h1>
+                <span class="remedy-badge"><%= remedy.badge %></span>
+                <div class="remedy-time">⏱️ <%= remedy.time %></div>
+                <div class="remedy-calories">🔥 <%= remedy.calories %></div>
+            </div>
+        </div>
+
+        <p class="remedy-description"><%= remedy.description %></p>
+
+        <div class="remedy-content">
+            <div class="remedy-section">
+                <h2>Ingredients</h2>
+                <ul class="ingredients-list">
+                    <% (remedy.ingredients || []).forEach(ingredient => { %>
+                        <li><%= ingredient %></li>
+                    <% }); %>
+                </ul>
+            </div>
+
+            <div class="remedy-section">
+                <h2>Preparation Steps</h2>
+                <ol class="steps-list">
+                    <% (remedy.steps || []).forEach(step => { %>
+                        <li><%= step %></li>
+                    <% }); %>
+                </ol>
+            </div>
+
+            <div class="remedy-section">
+                <h2>Health Benefits</h2>
+                <div class="remedy-benefits">
+                    <%= remedy.benefits || "No benefits information available." %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
