@@ -5,292 +5,319 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloom - Book a Consultation</title>
     <link rel="stylesheet" href="css/get-consultation.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="logo">
+    <header class="main-header">
+        <div class="logo-container">
             <img src="Images/logo.png" alt="Bloom Logo" class="logo-img">
-            <h1>Bloom</h1>
-            <p class="tagline">From Crampy to Happy, We've Got You Covered.</p>
+            <div class="logo-text">
+                <h1>Bloom</h1>
+                <p class="tagline">From Crampy to Happy, We've Got You Covered</p>
+            </div>
         </div>
         
-        <nav>
+        <nav class="main-nav">
             <ul>
-                <a href="Home.html">About Us</a>
-                <a href="loginPag.html">Login / Sign Up</a>
+                <li><a href="Home.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="loginPag.html"><i class="fas fa-user-circle"></i> Login / Sign Up</a></li>
             </ul>
         </nav>
         
         <div class="profile-icon">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-            </svg>
+            <i class="fas fa-user-circle"></i>
         </div>
     </header>
     
-    <main>
-        <div class="sidebar">
-            <h3>Topics</h3>
-            <ul>
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                    </svg>
-                    <span>Gynecologist</span>
-                    <span class="count">(62,045)</span>
-                </li>
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 3h18v18H3zM12 8v8M8 12h8"></path>
-                    </svg>
-                    <span>Nutritionist</span>
-                    <span class="count">(35,243)</span>
-                </li>
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 20V10M12 20V4M6 20v-6"></path>
-                    </svg>
-                    <span>Gyms</span>
-                    <span class="count">(41,541)</span>
-                </li>
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                        <path d="M9 9h.01"></path>
-                        <path d="M15 9h.01"></path>
-                    </svg>
-                    <span>Pilates</span>
-                    <span class="count">(28,631)</span>
-                </li>
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
-                    <span>Support Groups</span>
-                    <span class="count">(15,742)</span>
-                </li>
-                <li>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span>Workshops</span>
-                    <span class="count">(22,118)</span>
-                </li>
+    <main class="consultation-main">
+        <aside class="consultation-sidebar">
+            <h3><i class="fas fa-list-ul"></i> Consultation Topics</h3>
+            <ul class="topics-list">
+                <li data-category="all" class="active"><i class="fas fa-star"></i> All Specialists</li>
+                <li data-category="gynecologist"><i class="fas fa-female"></i> Gynecologists</li>
+                <li data-category="nutritionist"><i class="fas fa-utensils"></i> Nutritionists</li>
+                <li data-category="therapist"><i class="fas fa-heart"></i> Therapists</li>
+                <li data-category="ayurveda"><i class="fas fa-leaf"></i> Ayurveda Experts</li>
+                <li data-category="fitness"><i class="fas fa-dumbbell"></i> Fitness Coaches</li>
             </ul>
-        </div>
-        
-        <div class="center-content">
-            <div class="search-area">
-                <div class="search-container">
-                    <div class="search-location">
-                        <div class="location-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                        </div>
-                        <input type="text" placeholder="Search Based on Location...">
-                    </div>
-                    <button class="search-button">search</button>
+        </aside>
+
+        <section class="consultation-content">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="doctorSearch" placeholder="Search for specialists...">
+                    <button id="searchBtn">Search</button>
+                </div>                <div class="filter-tags">
+                    <span class="filter-tag active" data-filter="all">All</span>
+                    <span class="filter-tag" data-filter="available">Available Today</span>
+                    <span class="filter-tag" data-filter="female">Female Doctors</span>
+                    <span class="filter-tag" data-filter="appointments">Your Appointments</span>
+                    <span class="filter-tag" data-filter="contacted">Contacted Doctors</span>
                 </div>
             </div>
-            
-            <div class="doctor-card">
-                <div class="doctor-image">
-                    <img src="templates/Images/doc3.jpg" alt="Dr. Sadhna Sharma">
+
+            <div class="professionals-grid" id="professionalsContainer">
+                <!-- All Professionals -->
+                <div class="professional-card" data-category="gynecologist" data-available="true" data-gender="female" data-video="true">
+                    <div class="professional-image" style="background-image: url('Images/doctor1.jpg')">
+                        <span class="professional-badge">Available Today</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Dr. Priya Sharma</h3>
+                        <span class="professional-specialty">Gynecologist • Delhi</span>
+                        <span class="professional-education">MBBS, MD (Gynecology) - AIIMS, Delhi</span>
+                        <div class="professional-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="professional-meta">
+                            <span class="professional-price">₹800/consultation</span>
+                        </div>
+                        <div class="professional-description">
+                            <p>Currently practicing at Delhi Women's Hospital. Dr. Sharma is an expert in menstrual health and adolescent gynecology.<br>She is passionate about empowering women through education and care.</p>
+                        </div>
+                        <div class="professional-actions">
+                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
+                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="doctor-details">
-                    <div class="doctor-name">
-                        <h2>Dr. Sadhna Sharma</h2>
-                        <button class="favorite-button">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                            </svg>
-                        </button>
+
+                <div class="professional-card" data-category="nutritionist" data-available="false" data-gender="female" data-video="true">
+                    <div class="professional-image" style="background-image: url('Images/doctor2.jpg')">
                     </div>
-                    <div class="doctor-specialties">
-                        <span class="specialty-tag">Gynecologist</span>
-                        <span class="specialty-tag">Women's Health</span>
-                        <span class="specialty-tag">MBBS</span>
-                    </div>
-                    
-                    <div class="doctor-bio">
-                        Dr. Sadhna Sharma is a board-certified gynecologist with over 15 years of experience in women's reproductive health. She specializes in managing menstrual disorders, PCOS, and providing comprehensive women's wellness care. Her approach emphasizes patient education and personalized treatment plans.
-                    </div>
-                    
-                    <div class="doctor-education">
-                        <h4>Education & Training</h4>
-                        <ul>
-                            <li>MBBS - All India Institute of Medical Sciences (AIIMS), Delhi</li>
-                            <li>MD in Obstetrics & Gynecology - King George's Medical University</li>
-                            <li>Fellowship in Reproductive Medicine - Manipal Hospital</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-value">651,324</div>
-                            <div class="stat-label">Views</div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Dr. Ananya Reddy</h3>
+                        <span class="professional-specialty">Nutritionist • Bangalore</span>
+                        <span class="professional-education">MSc (Nutrition) - NIN, Hyderabad</span>
+                        <div class="professional-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-value">36,645</div>
-                            <div class="stat-label">Likes</div>
+                        <div class="professional-meta">
+                            <span class="professional-price">₹600/consultation</span>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-value">56</div>
-                            <div class="stat-label">Comments</div>
+                        <div class="professional-description">
+                            <p>Currently practicing at Bangalore Nutrition Clinic. Dr. Reddy specializes in women's nutrition and weight management.<br>She helps clients achieve their health goals with personalized diet plans.</p>
+                        </div>
+                        <div class="professional-actions">
+                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
+                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
                         </div>
                     </div>
-                    
-                    <button class="book-consultation" onclick="openModal('Dr. Sadhna Sharma')">Book Consultation</button>
+                </div>
+
+                <!-- Ayurveda Experts -->
+                <div class="professional-card" data-category="ayurveda" data-available="true" data-gender="male" data-video="false">
+                    <div class="professional-image" style="background-image: url('Images/doctor3.jpg')">
+                        <span class="professional-badge">Available Today</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Dr. Ravi Patel</h3>
+                        <span class="professional-specialty">Ayurveda Expert • Mumbai</span>
+                        <span class="professional-education">BAMS, MD (Ayurveda) - Government Ayurveda College, Mumbai</span>
+                        <div class="professional-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="professional-meta">
+                            <span class="professional-price">₹700/consultation</span>
+                        </div>
+                        <div class="professional-description">
+                            <p>Currently practicing at Mumbai Ayurveda Wellness Center. Dr. Patel specializes in holistic healing and chronic pain management.<br>He is dedicated to providing personalized Ayurvedic solutions for women's health and wellness.</p>
+                        </div>
+                        <div class="professional-actions">
+                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
+                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="professional-card" data-category="therapist" data-available="true" data-gender="female" data-video="true">
+                    <div class="professional-image" style="background-image: url('Images/doctor4.jpg')">
+                        <span class="professional-badge">Available Today</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Dr. Neha Gupta</h3>
+                        <span class="professional-specialty">Therapist • Hyderabad</span>
+                        <span class="professional-education">PhD (Clinical Psychology) - Osmania University</span>
+                        <div class="professional-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <div class="professional-meta">
+                            <span class="professional-price">₹900/consultation</span>
+                        </div>
+                        <div class="professional-description">
+                            <p>Currently practicing at MindCare Clinic, Hyderabad. Dr. Gupta is an expert in adolescent and women's mental health.<br>She is committed to providing compassionate therapy for emotional well-being.</p>
+                        </div>
+                        <div class="professional-actions">
+                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
+                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="professional-card" data-category="fitness" data-available="false" data-gender="female" data-video="true">
+                    <div class="professional-image" style="background-image: url('Images/doctor5.jpg')">
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Dr. Sneha Joshi</h3>
+                        <span class="professional-specialty">Fitness Coach • Pune</span>
+                        <span class="professional-education">MSc (Sports Science) - Symbiosis International University</span>
+                        <div class="professional-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="professional-meta">
+                            <span class="professional-price">₹500/consultation</span>
+                        </div>
+                        <div class="professional-description">
+                            <p>Currently practicing at Pune Fitness Studio. Dr. Joshi focuses on women's fitness and postnatal recovery.<br>She motivates clients to achieve their best physical health through tailored programs.</p>
+                        </div>
+                        <div class="professional-actions">
+                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
+                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="professional-card" data-category="gynecologist" data-available="true" data-gender="female" data-video="true">
+                    <div class="professional-image" style="background-image: url('Images/doctor6.jpg')">
+                        <span class="professional-badge">Available Today</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Dr. Meera Krishnan</h3>
+                        <span class="professional-specialty">Gynecologist • Chennai</span>
+                        <span class="professional-education">MBBS, DGO - Stanley Medical College, Chennai</span>
+                        <div class="professional-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <div class="professional-meta">
+                            <span class="professional-price">₹1000/consultation</span>
+                        </div>
+                        <div class="professional-description">
+                            <p>Currently practicing at Chennai Women's Clinic. Dr. Krishnan is known for her expertise in PCOS and reproductive health.<br>She is dedicated to providing patient-centered gynecological care.</p>
+                        </div>
+                        <div class="professional-actions">
+                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
+                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Ayurveda Expert -->
+                <div class="professional-card" data-category="ayurveda" data-available="true" data-gender="female" data-video="true">
+                    <div class="professional-image" style="background-image: url('Images/ayurveda1.jpg')">
+                        <span class="professional-badge">Available Today</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Dr. Leela Menon</h3>
+                        <span class="professional-specialty">Ayurveda Expert • Kerala</span>
+                        <span class="professional-education">BAMS - Government Ayurveda College, Thiruvananthapuram</span>
+                        <div class="professional-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <div class="professional-meta">
+                            <span class="professional-price">₹850/consultation</span>
+                        </div>
+                        <div class="professional-description">
+                            <p>Currently practicing at Kerala Ayurveda Healing Center. Dr. Menon is an expert in natural therapies and women's wellness.<br>She is passionate about holistic health and preventive care for women.</p>
+                        </div>
+                        <div class="professional-actions">
+                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
+                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="doctor-card">
-                <div class="doctor-image">
-                    <img src="templates/Images/woman-doctor.jpg" alt="Dr. Anushka Sharma">
-                </div>
-                <div class="doctor-details">
-                    <div class="doctor-name">
-                        <h2>Dr. Anushka Sharma</h2>
-                        <button class="favorite-button">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="doctor-specialties">
-                        <span class="specialty-tag">MBBS</span>
-                        <span class="specialty-tag">Menstrual Health Specialist</span>
-                        <span class="specialty-tag">Reproductive Health</span>
-                    </div>
-                    
-                    <div class="doctor-bio">
-                        Dr. Anushka Sharma is a dedicated menstrual health specialist with a focus on addressing period pain, irregular cycles, and hormonal imbalances. She combines modern medical approaches with holistic wellness strategies to help women manage their menstrual health effectively. Dr. Sharma is known for her compassionate care and thorough approach.
-                    </div>
-                    
-                    <div class="doctor-education">
-                        <h4>Education & Training</h4>
-                        <ul>
-                            <li>MBBS - Grant Medical College, Mumbai</li>
-                            <li>Diploma in Gynecology - Lady Hardinge Medical College</li>
-                            <li>Certification in Hormonal Health - Royal College of Physicians, UK</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-value">244,564</div>
-                            <div class="stat-label">Views</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">10,920</div>
-                            <div class="stat-label">Likes</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">184</div>
-                            <div class="stat-label">Comments</div>
-                        </div>
-                    </div>
-                    
-                    <button class="book-consultation" onclick="openModal('Dr. Anushka Sharma')">Book Consultation</button>
-                </div>
-            </div>
-            
-            <div class="doctor-card">
-                <div class="doctor-image">
-                    <img src="templates/Images/mathew.jpg" alt="Dr. Mathew Johnson">
-                </div>
-                <div class="doctor-details">
-                    <div class="doctor-name">
-                        <h2>Dr. Mathew Johnson</h2>
-                        <button class="favorite-button">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="doctor-specialties">
-                        <span class="specialty-tag">MBBS</span>
-                        <span class="specialty-tag">Reproductive Endocrinology</span>
-                        <span class="specialty-tag">Fertility Specialist</span>
-                    </div>
-                    
-                    <div class="doctor-bio">
-                        Dr. Mathew Johnson is a reproductive endocrinologist with expertise in fertility treatments and hormonal disorders. With a decade of clinical practice, he has helped hundreds of couples achieve successful pregnancies. His research focuses on innovative approaches to PCOS management and fertility preservation options for women of all ages.
-                    </div>
-                    
-                    <div class="doctor-education">
-                        <h4>Education & Training</h4>
-                        <ul>
-                            <li>MBBS - Christian Medical College, Vellore</li>
-                            <li>MD in Reproductive Medicine - Stanford University, USA</li>
-                            <li>Fellowship in Reproductive Endocrinology - Mayo Clinic</li>
-                            <li>Research Fellow - Johns Hopkins Medical Center</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-value">601,066</div>
-                            <div class="stat-label">Views</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">24,753</div>
-                            <div class="stat-label">Likes</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">209</div>
-                            <div class="stat-label">Comments</div>
-                        </div>
-                    </div>
-                    
-                    <button class="book-consultation" onclick="openModal('Dr. Mathew Johnson')">Book Consultation</button>
-                </div>
-            </div>
-        </div>
+        </section>
 
         <!-- Consultation Modal -->
         <div class="consultation-modal" id="consultationModal">
+            <div class="modal-overlay" id="modalOverlay"></div>
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Book a Consultation</h2>
-                    <button class="close-modal" onclick="closeModal()">&times;</button>
+                    <h2><i class="fas fa-calendar-check"></i> Book a Consultation</h2>
+                    <button class="close-modal" id="closeModal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <form id="consultationForm">
                         <div class="form-group">
-                            <label for="doctorName">Doctor's Name</label>
+                            <label for="doctorName"><i class="fas fa-user-md"></i> Specialist</label>
                             <input type="text" id="doctorName" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="userName">Your Name</label>
-                            <input type="text" id="userName" placeholder="Enter your name" required>
+                            <label for="userName"><i class="fas fa-user"></i> Your Name</label>
+                            <input type="text" id="userName" placeholder="Enter your full name" required>
                         </div>
                         <div class="form-group">
-                            <label for="userEmail">Your Email</label>
-                            <input type="email" id="userEmail" placeholder="Enter your email" required>
+                            <label for="userEmail"><i class="fas fa-envelope"></i> Your Email</label>
+                            <input type="email" id="userEmail" placeholder="Enter your email address" required>
                         </div>
                         <div class="form-group">
-                            <label for="appointmentDate">Preferred Date</label>
-                            <input type="date" id="appointmentDate" required>
+                            <label for="appointmentDate"><i class="fas fa-calendar-day"></i> Preferred Date</label>
+                            <input type="date" id="appointmentDate" required min="">
                         </div>
                         <div class="form-group">
-                            <label for="userMessage">Additional Notes</label>
-                            <textarea id="userMessage" placeholder="Mention any specific concerns"></textarea>
+                            <label for="consultationType"><i class="fas fa-video"></i> Consultation Type</label>
+                            <select id="consultationType" required>
+                                <option value="">Select type</option>
+                                <option value="video">Video Call</option>
+                                <option value="clinic">Clinic Visit</option>
+                                <option value="phone">Phone Call</option>
+                            </select>
                         </div>
-                        <button type="submit" class="submit-consultation">Submit</button>
+                        <div class="form-group">
+                            <label for="userMessage"><i class="fas fa-comment-dots"></i> Additional Notes</label>
+                            <textarea id="userMessage" rows="4" placeholder="Mention any specific concerns or symptoms"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="submit-consultation">
+                                <i class="fas fa-paper-plane"></i> Book Consultation
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-    </main>
 
-    <script src="script.js"></script>
+        <!-- Confirmation Toast -->
+        <div class="confirmation-toast" id="confirmationToast">
+            <div class="toast-content">
+                <i class="fas fa-check-circle"></i>
+                <span>Your consultation has been booked successfully!</span>
+            </div>
+        </div>
+
+        <!-- Message Modal -->
+        <div class="message-modal" id="messageModal">
+            <div class="modal-overlay" id="messageModalOverlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-envelope"></i> Messages</h2>
+                    <button class="close-modal" id="closeMessageModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="message-container" id="messageContainer">
+                        <!-- Messages will be loaded here -->
+                    </div>
+                    <div class="premium-message" id="premiumMessage" style="display: none;">
+                        <div class="premium-content">
+                            <i class="fas fa-crown"></i>
+                            <h3>Upgrade to Premium</h3>
+                            <p>You've reached the free message limit. Upgrade to our premium plan to continue messaging.</p>
+                            <button class="upgrade-btn">Upgrade Now</button>
+                        </div>
+                    </div>
+                    <form id="messageForm" class="message-form">
+                        <div class="form-group">
+                            <textarea id="messageText" placeholder="Type your message..." required></textarea>
+                            <button type="submit" class="send-message-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>    <script src="consultation.js"></script>
 </body>
 </html>
