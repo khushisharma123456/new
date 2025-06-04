@@ -104,15 +104,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fetch professionals data
     async function fetchProfessionals() {
-        try {
-            // In a real app, replace with actual API call
-            // const response = await fetch('/api/professionals');
-            // state.professionals = await response.json();
-              state.professionals = await mockFetchProfessionals();
+        try {            const response = await fetch('../templates/data/doctors.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            state.professionals = data.doctors;
             renderProfessionals(state.professionals);
         } catch (error) {
             console.error('Error fetching professionals:', error);
             showError('Failed to load professionals. Please try again later.');
+            
+            // Fallback to mock data if JSON fetch fails
+            console.log('Loading mock data as fallback');
+            state.professionals = await mockFetchProfessionals();
+            renderProfessionals(state.professionals);
         }
     }
 
@@ -305,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span>(${professional.reviews} reviews)</span>
                 </div>                <div class="professional-meta">
                     <span class="professional-price">${professional.price}/consultation</span>
-                    <a href="${`https://www.justdial.com/${professional.location}/${professional.name.replace(/\s+/g, '-')}-${professional.specialty.replace(/\s+/g, '-')}`}" target="_blank" class="justdial-link">📞</a>
+                    <a href="https://www.justdial.com/search?q=${encodeURIComponent(professional.name + ' ' + professional.specialty + ' ' + professional.location)}" target="_blank" class="justdial-link">📞</a>
                 </div>
                 <div class="professional-description">
                     <p>${professional.description}</p>
@@ -333,72 +339,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Filter professionals based on current state
     function filterProfessionals() {
-        // Get the active filter and category
         const activeCategoryItem = document.querySelector('.topics-list li.active');
         const activeFilterTag = document.querySelector('.filter-tag.active');
         const searchTerm = elements.doctorSearch.value.toLowerCase().trim();
         const activeCategory = activeCategoryItem ? activeCategoryItem.getAttribute('data-category') : 'all';
-        const activeFilter = activeFilterTag ? activeFilterTag.getAttribute('data-filter') : 'all';        let filtered = state.professionals.filter(professional => {
-            // Your Appointments filter
+        const activeFilter = activeFilterTag ? activeFilterTag.getAttribute('data-filter') : 'all';
+        
+        let filtered = state.professionals.filter(professional => {
             if (activeFilter === 'appointments') {
-                const hasAppointment = state.appointments.some(apt => apt.doctorId === professional.id);
-                if (!hasAppointment) return false;
-                if (searchTerm &&
-                    !(professional.name && professional.name.toLowerCase().includes(searchTerm)) &&
-                    !(professional.specialty && professional.specialty.toLowerCase().includes(searchTerm))
-                ) return false;
-                return true;
+                return state.appointments.some(apt => apt.doctorId === professional.id);
             }
             
-            // Contacted Doctors filter
             if (activeFilter === 'contacted') {
-                if (!state.contactedDoctors.has(professional.id)) return false;
-                if (searchTerm &&
-                    !(professional.name && professional.name.toLowerCase().includes(searchTerm)) &&
-                    !(professional.specialty && professional.specialty.toLowerCase().includes(searchTerm))
-                ) return false;
-                return true;
+                return state.contactedDoctors.has(professional.id);
             }
 
-            // Available Today filter (ignore category)
             if (activeFilter === 'available') {
-                if (!professional.availableToday) return false;
-                if (searchTerm &&
-                    !(professional.name && professional.name.toLowerCase().includes(searchTerm)) &&
-                    !(professional.specialty && professional.specialty.toLowerCase().includes(searchTerm))
-                ) return false;
-                return true;
+                return professional.availableToday;
             }
-            // Female Doctors filter (ignore category)
+            
             if (activeFilter === 'female') {
-                if (professional.gender !== 'female') return false;
-                if (searchTerm &&
-                    !(professional.name && professional.name.toLowerCase().includes(searchTerm)) &&
-                    !(professional.specialty && professional.specialty.toLowerCase().includes(searchTerm))
-                ) return false;
-                return true;
+                return professional.gender === 'female';
             }
-            // All filter (show all, with search)
-            if (activeCategory === 'all' && activeFilter === 'all') {
-                if (!searchTerm) return true;
-                return (
-                    (professional.name && professional.name.toLowerCase().includes(searchTerm)) ||
-                    (professional.specialty && professional.specialty.toLowerCase().includes(searchTerm))
-                );
-            }
-            // Category filter only
+            
             if (activeCategory !== 'all' && professional.category !== activeCategory) {
                 return false;
             }
-            // Search term (matches name or specialty, partial and case-insensitive)
-            if (searchTerm &&
-                !(professional.name && professional.name.toLowerCase().includes(searchTerm)) &&
-                !(professional.specialty && professional.specialty.toLowerCase().includes(searchTerm))
-            ) {
-                return false;
+            
+            if (searchTerm) {
+                return (professional.name && professional.name.toLowerCase().includes(searchTerm)) ||
+                       (professional.specialty && professional.specialty.toLowerCase().includes(searchTerm));
             }
+            
             return true;
         });
+        
         renderProfessionals(filtered);
     }
 

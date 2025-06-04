@@ -28,16 +28,13 @@
         <div class="profile-icon">
             <i class="fas fa-user-circle"></i>
         </div>
-    </header>
-    
-    <main class="consultation-main">
+    </header>    <main class="consultation-main">
         <aside class="consultation-sidebar">
-            <h3><i class="fas fa-list-ul"></i> Consultation Topics</h3>
+            <h3><i class="fas fa-spa"></i> Bloom</h3>
             <ul class="topics-list">
                 <li data-category="all" class="active"><i class="fas fa-star"></i> All Specialists</li>
                 <li data-category="gynecologist"><i class="fas fa-female"></i> Gynecologists</li>
-                <li data-category="nutritionist"><i class="fas fa-utensils"></i> Nutritionists</li>
-                <li data-category="therapist"><i class="fas fa-heart"></i> Therapists</li>
+                <li data-category="nutritionist"><i class="fas fa-utensils"></i> Nutritionists</li>                <li data-category="support"><i class="fas fa-heart"></i> Therapists</li>
                 <li data-category="ayurveda"><i class="fas fa-leaf"></i> Ayurveda Experts</li>
                 <li data-category="fitness"><i class="fas fa-dumbbell"></i> Fitness Coaches</li>
             </ul>
@@ -56,177 +53,8 @@
                     <span class="filter-tag" data-filter="appointments">Your Appointments</span>
                     <span class="filter-tag" data-filter="contacted">Contacted Doctors</span>
                 </div>
-            </div>
-
-            <div class="professionals-grid" id="professionalsContainer">
-                <!-- All Professionals -->
-                <div class="professional-card" data-category="gynecologist" data-available="true" data-gender="female" data-video="true">
-                    <div class="professional-image" style="background-image: url('Images/doctor1.jpg')">
-                        <span class="professional-badge">Available Today</span>
-                    </div>
-                    <div class="professional-info">
-                        <h3 class="professional-name">Dr. Priya Sharma</h3>
-                        <span class="professional-specialty">Gynecologist • Delhi</span>
-                        <span class="professional-education">MBBS, MD (Gynecology) - AIIMS, Delhi</span>
-                        <div class="professional-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <div class="professional-meta">
-                            <span class="professional-price">₹800/consultation</span>
-                        </div>
-                        <div class="professional-description">
-                            <p>Currently practicing at Delhi Women's Hospital. Dr. Sharma is an expert in menstrual health and adolescent gynecology.<br>She is passionate about empowering women through education and care.</p>
-                        </div>
-                        <div class="professional-actions">
-                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
-                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="professional-card" data-category="nutritionist" data-available="false" data-gender="female" data-video="true">
-                    <div class="professional-image" style="background-image: url('Images/doctor2.jpg')">
-                    </div>
-                    <div class="professional-info">
-                        <h3 class="professional-name">Dr. Ananya Reddy</h3>
-                        <span class="professional-specialty">Nutritionist • Bangalore</span>
-                        <span class="professional-education">MSc (Nutrition) - NIN, Hyderabad</span>
-                        <div class="professional-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="professional-meta">
-                            <span class="professional-price">₹600/consultation</span>
-                        </div>
-                        <div class="professional-description">
-                            <p>Currently practicing at Bangalore Nutrition Clinic. Dr. Reddy specializes in women's nutrition and weight management.<br>She helps clients achieve their health goals with personalized diet plans.</p>
-                        </div>
-                        <div class="professional-actions">
-                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
-                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ayurveda Experts -->
-                <div class="professional-card" data-category="ayurveda" data-available="true" data-gender="male" data-video="false">
-                    <div class="professional-image" style="background-image: url('Images/doctor3.jpg')">
-                        <span class="professional-badge">Available Today</span>
-                    </div>
-                    <div class="professional-info">
-                        <h3 class="professional-name">Dr. Ravi Patel</h3>
-                        <span class="professional-specialty">Ayurveda Expert • Mumbai</span>
-                        <span class="professional-education">BAMS, MD (Ayurveda) - Government Ayurveda College, Mumbai</span>
-                        <div class="professional-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <div class="professional-meta">
-                            <span class="professional-price">₹700/consultation</span>
-                        </div>
-                        <div class="professional-description">
-                            <p>Currently practicing at Mumbai Ayurveda Wellness Center. Dr. Patel specializes in holistic healing and chronic pain management.<br>He is dedicated to providing personalized Ayurvedic solutions for women's health and wellness.</p>
-                        </div>
-                        <div class="professional-actions">
-                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
-                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="professional-card" data-category="therapist" data-available="true" data-gender="female" data-video="true">
-                    <div class="professional-image" style="background-image: url('Images/doctor4.jpg')">
-                        <span class="professional-badge">Available Today</span>
-                    </div>
-                    <div class="professional-info">
-                        <h3 class="professional-name">Dr. Neha Gupta</h3>
-                        <span class="professional-specialty">Therapist • Hyderabad</span>
-                        <span class="professional-education">PhD (Clinical Psychology) - Osmania University</span>
-                        <div class="professional-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="professional-meta">
-                            <span class="professional-price">₹900/consultation</span>
-                        </div>
-                        <div class="professional-description">
-                            <p>Currently practicing at MindCare Clinic, Hyderabad. Dr. Gupta is an expert in adolescent and women's mental health.<br>She is committed to providing compassionate therapy for emotional well-being.</p>
-                        </div>
-                        <div class="professional-actions">
-                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
-                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="professional-card" data-category="fitness" data-available="false" data-gender="female" data-video="true">
-                    <div class="professional-image" style="background-image: url('Images/doctor5.jpg')">
-                    </div>
-                    <div class="professional-info">
-                        <h3 class="professional-name">Dr. Sneha Joshi</h3>
-                        <span class="professional-specialty">Fitness Coach • Pune</span>
-                        <span class="professional-education">MSc (Sports Science) - Symbiosis International University</span>
-                        <div class="professional-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <div class="professional-meta">
-                            <span class="professional-price">₹500/consultation</span>
-                        </div>
-                        <div class="professional-description">
-                            <p>Currently practicing at Pune Fitness Studio. Dr. Joshi focuses on women's fitness and postnatal recovery.<br>She motivates clients to achieve their best physical health through tailored programs.</p>
-                        </div>
-                        <div class="professional-actions">
-                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
-                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="professional-card" data-category="gynecologist" data-available="true" data-gender="female" data-video="true">
-                    <div class="professional-image" style="background-image: url('Images/doctor6.jpg')">
-                        <span class="professional-badge">Available Today</span>
-                    </div>
-                    <div class="professional-info">
-                        <h3 class="professional-name">Dr. Meera Krishnan</h3>
-                        <span class="professional-specialty">Gynecologist • Chennai</span>
-                        <span class="professional-education">MBBS, DGO - Stanley Medical College, Chennai</span>
-                        <div class="professional-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="professional-meta">
-                            <span class="professional-price">₹1000/consultation</span>
-                        </div>
-                        <div class="professional-description">
-                            <p>Currently practicing at Chennai Women's Clinic. Dr. Krishnan is known for her expertise in PCOS and reproductive health.<br>She is dedicated to providing patient-centered gynecological care.</p>
-                        </div>
-                        <div class="professional-actions">
-                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
-                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional Ayurveda Expert -->
-                <div class="professional-card" data-category="ayurveda" data-available="true" data-gender="female" data-video="true">
-                    <div class="professional-image" style="background-image: url('Images/ayurveda1.jpg')">
-                        <span class="professional-badge">Available Today</span>
-                    </div>
-                    <div class="professional-info">
-                        <h3 class="professional-name">Dr. Leela Menon</h3>
-                        <span class="professional-specialty">Ayurveda Expert • Kerala</span>
-                        <span class="professional-education">BAMS - Government Ayurveda College, Thiruvananthapuram</span>
-                        <div class="professional-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="professional-meta">
-                            <span class="professional-price">₹850/consultation</span>
-                        </div>
-                        <div class="professional-description">
-                            <p>Currently practicing at Kerala Ayurveda Healing Center. Dr. Menon is an expert in natural therapies and women's wellness.<br>She is passionate about holistic health and preventive care for women.</p>
-                        </div>
-                        <div class="professional-actions">
-                            <button class="book-consultation-btn"><i class="fas fa-calendar-check"></i> Book Appointment</button>
-                            <button class="message-btn"><i class="fas fa-envelope"></i> Send Message</button>
-                        </div>
-                    </div>
-                </div>
+            </div>            <div class="professionals-grid" id="professionalsContainer">
+                <!-- All specialists will be dynamically loaded here by JavaScript -->
             </div>
         </section>
 
