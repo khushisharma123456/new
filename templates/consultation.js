@@ -298,8 +298,14 @@ document.addEventListener('DOMContentLoaded', function() {
             badges.push('<span class="professional-badge contacted-badge"><i class="fas fa-envelope"></i> Contacted</span>');
         }
 
+        // Check if image URL exists, otherwise use default profile emoji
+        const imageStyle = professional.image 
+            ? `background-image: url('${professional.image}')`
+            : `background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 48px;`;
+
         card.innerHTML = `
-            <div class="professional-image" style="background-image: url('${professional.image}')">
+            <div class="professional-image" style="${imageStyle}">
+                ${!professional.image ? '<i class="fas fa-user-circle"></i>' : ''}
                 <div class="badge-container">${badges.join('')}</div>
             </div>
             <div class="professional-info">
