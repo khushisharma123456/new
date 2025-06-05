@@ -1206,10 +1206,17 @@
 
             console.log('Saving mood:', { mood, intensity, date }); // Debug log
 
-            fetch('/save_mood', {
+            // Get the current path and construct the correct URL
+            const currentPath = window.location.pathname;
+            const saveMoodUrl = currentPath.includes('dashboard') ? '/dashboard/save_mood' : '/api/save_mood';
+
+            console.log('Using URL:', saveMoodUrl); // Debug log
+
+            fetch(saveMoodUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({
                     mood: mood,
@@ -1217,20 +1224,40 @@
                     date: date
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Response status:', response.status); // Debug log
+                console.log('Response headers:', Object.fromEntries(response.headers.entries())); // Debug log
+                
+                if (!response.ok) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log('Server response:', data); // Debug log
                 if (data.error) {
                     alert('Error saving mood: ' + data.error);
                 } else {
                     alert('Mood saved successfully!');
+                    // Clear selected moods
+                    selectedMoods = [];
+                    updateMoodList();
+                    // Hide save button
+                    document.getElementById('saveMood').style.display = 'none';
                     // Show Spotify connection section
                     document.getElementById('spotifySection').style.display = 'block';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Error saving mood. Please try again.');
+                if (error.message.includes('401')) {
+                    alert('Please log in first to save your mood');
+                    window.location.href = '/login';  // Redirect to login page
+                } else {
+                    alert('Error saving mood: ' + error.message);
+                }
             });
         }
 

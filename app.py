@@ -519,38 +519,85 @@ class Mood(db.Model):
     def __repr__(self):
         return f'<Mood {self.mood} {self.intensity} {self.date}>'
 
-@app.route('/save_mood', methods=['POST'])
+@app.route('/api/save_mood', methods=['POST'])
+@app.route('/dashboard/save_mood', methods=['POST'])
 def save_mood():
     try:
+        # Log the request details
+        app.logger.info(f"Request method: {request.method}")
+        app.logger.info(f"Request headers: {dict(request.headers)}")
+        app.logger.info(f"Request data: {request.get_data()}")
+        
+        # Ensure we're returning JSON
+        if not request.is_json:
+            app.logger.error("Request is not JSON")
+            return jsonify({'error': 'Request must be JSON'}), 400
+
+        app.logger.info(f"Session contents: {dict(session)}")  # Log session contents
+        
         if 'user_id' not in session:
-            return jsonify({'error': 'User not logged in'}), 401
+            app.logger.error("User not logged in - no user_id in session")
+            return jsonify({'error': 'Please log in first to save your mood'}), 401
 
         data = request.get_json()
+        app.logger.info(f"Received data: {data}")  # Log the received data
+        
+        if not data:
+            app.logger.error("No JSON data received")
+            return jsonify({'error': 'No data received'}), 400
+        
         mood = data.get('mood')
         intensity = data.get('intensity')
         date = data.get('date')
         
-        app.logger.info(f"Received mood data: mood={mood}, intensity={intensity}, date={date}")
+        app.logger.info(f"Parsed data: mood={mood}, intensity={intensity}, date={date}")
         
         if not all([mood, intensity, date]):
-            app.logger.error("Missing required mood data")
-            return jsonify({'error': 'Missing required mood data'}), 400
+            missing_fields = []
+            if not mood: missing_fields.append('mood')
+            if not intensity: missing_fields.append('intensity')
+            if not date: missing_fields.append('date')
+            app.logger.error(f"Missing required mood data: {', '.join(missing_fields)}")
+            return jsonify({'error': f'Missing required fields: {", ".join(missing_fields)}'}), 400
+
+        try:
+            intensity = int(intensity)  # Ensure intensity is an integer
+            if not (1 <= intensity <= 5):
+                app.logger.error(f"Intensity out of range: {intensity}")
+                return jsonify({'error': 'Intensity must be between 1 and 5'}), 400
+        except ValueError:
+            app.logger.error(f"Invalid intensity value: {intensity}")
+            return jsonify({'error': 'Invalid intensity value'}), 400
+
+        try:
+            date_obj = datetime.strptime(date, '%Y-%m-%d')
+        except ValueError:
+            app.logger.error(f"Invalid date format: {date}")
+            return jsonify({'error': 'Invalid date format. Use YYYY-MM-DD'}), 400
 
         new_mood = Mood(
             user_id=session['user_id'],
             mood=mood,
             intensity=intensity,
-            date=datetime.strptime(date, '%Y-%m-%d')
+            date=date_obj
         )
+        
+        app.logger.info(f"Creating new mood entry: {new_mood}")
         db.session.add(new_mood)
         db.session.commit()
         
         app.logger.info(f"Successfully saved mood: {new_mood.id}")
-        return jsonify({'message': 'Mood saved successfully'})
+        return jsonify({
+            'message': 'Mood saved successfully',
+            'mood_id': new_mood.id,
+            'mood': mood,
+            'intensity': intensity,
+            'date': date
+        })
     except Exception as e:
         app.logger.error(f"Error saving mood: {str(e)}")
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': f'Server error: {str(e)}'}), 500
 
 @app.route('/get_mood_history')
 def get_mood_history():
