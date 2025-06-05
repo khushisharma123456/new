@@ -767,6 +767,62 @@
         .open-spotify-btn:hover {
             background: #1ed760;
         }
+
+        .selected-moods {
+            margin: 20px 0;
+            padding: 15px;
+            background: var(--accent-lavender);
+            border-radius: 12px;
+        }
+
+        .selected-moods h3 {
+            color: var(--primary-purple);
+            margin-bottom: 10px;
+        }
+
+        .mood-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .mood-item .mood-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mood-item .remove-mood {
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mood-item .remove-mood:hover {
+            color: var(--primary-purple);
+        }
+
+        .save-mood-btn {
+            background: var(--primary-purple);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .save-mood-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -945,7 +1001,16 @@
                 <span class="star" data-rating="5">★</span>
             </div>
 
-            <div class="spotify-section">
+            <div class="selected-moods">
+                <h3>Today's Moods</h3>
+                <div id="moodList"></div>
+            </div>
+
+            <button id="saveMood" class="save-mood-btn" style="display: none;">
+                Save Mood
+            </button>
+
+            <div class="spotify-section" style="display: none;">
                 <button id="spotify-login" class="spotify-login-btn">
                     Connect with Spotify
                 </button>
@@ -955,6 +1020,101 @@
     </div>
 
     <script>
+        // Spotify Configuration
+        const clientId = '6b770d2f043948dc9515d3a5f65a5113'; // Your Spotify Client ID
+        const redirectUri = 'https://YOUR_NGROK_URL.ngrok.io/spotify-callback'; // Replace YOUR_NGROK_URL with your actual ngrok subdomain
+        const scopes = 'user-read-private user-read-email playlist-modify-public playlist-modify-private';
+
+        // Spotify Login
+        document.getElementById('spotify-login').addEventListener('click', () => {
+            const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}`;
+            window.location.href = authUrl;
+        });
+
+        // Generate Playlist based on mood and rating
+        async function generatePlaylist(mood, rating) {
+            const accessToken = localStorage.getItem('spotify_access_token');
+            if (!accessToken) {
+                alert('Please connect with Spotify first!');
+                return;
+            }
+
+            try {
+                // Map mood to Spotify seed parameters
+                const moodSeeds = {
+                    'happy': ['happy', 'energetic', 'upbeat'],
+                    'sad': ['sad', 'melancholy', 'emotional'],
+                    'angry': ['angry', 'intense', 'powerful'],
+                    'energetic': ['energetic', 'upbeat', 'dance']
+                };
+
+                // Get recommendations based on mood
+                const response = await fetch(`https://api.spotify.com/v1/recommendations?limit=20&seed_genres=${moodSeeds[mood].join(',')}&target_valence=${rating/5}`, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+
+                const data = await response.json();
+                
+                // Create a new playlist
+                const userResponse = await fetch('https://api.spotify.com/v1/me', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+                const userData = await userResponse.json();
+
+                const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: `Mood Playlist - ${mood.charAt(0).toUpperCase() + mood.slice(1)} (${rating}/5)`,
+                        description: `A playlist generated based on your ${mood} mood with intensity ${rating}/5`
+                    })
+                });
+
+                const playlistData = await playlistResponse.json();
+
+                // Add tracks to the playlist
+                const trackUris = data.tracks.map(track => track.uri);
+                await fetch(`https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        uris: trackUris
+                    })
+                });
+
+                // Display the playlist
+                const playlistDisplay = document.getElementById('playlistDisplay');
+                playlistDisplay.innerHTML = `
+                    <iframe src="https://open.spotify.com/embed/playlist/${playlistData.id}" 
+                            width="300" 
+                            height="380" 
+                            frameborder="0" 
+                            allowtransparency="true" 
+                            allow="encrypted-media">
+                    </iframe>
+                    <br>
+                    <a href="${playlistData.external_urls.spotify}" 
+                       target="_blank" 
+                       class="open-spotify-btn">
+                        Open in Spotify
+                    </a>
+                `;
+            } catch (error) {
+                console.error('Error generating playlist:', error);
+                alert('Error generating playlist. Please try again.');
+            }
+        }
+
         // Symptom Chip Selection
         const symptomChips = document.querySelectorAll('.symptom-chip:not(.add-symptom)');
         symptomChips.forEach(chip => {
@@ -963,15 +1123,25 @@
             });
         });
         
+        // Store selected moods
+        let selectedMoods = [];
+
         // Mood selection
         document.querySelectorAll('.mood-option').forEach(option => {
             option.addEventListener('click', function() {
-                document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
                 const mood = this.dataset.mood;
                 const rating = document.querySelectorAll('.star.active').length;
+                
                 if (rating > 0) {
-                    generatePlaylist(mood, rating);
+                    // Add mood to list if not already selected
+                    if (!selectedMoods.find(m => m.mood === mood)) {
+                        selectedMoods.push({
+                            mood: mood,
+                            intensity: rating
+                        });
+                        updateMoodList();
+                        document.getElementById('saveMood').style.display = 'block';
+                    }
                 }
             });
         });
@@ -983,14 +1153,90 @@
                 document.querySelectorAll('.star').forEach(s => {
                     s.classList.toggle('active', s.dataset.rating <= rating);
                 });
-                
-                const selectedMood = document.querySelector('.mood-option.selected');
-                if (selectedMood) {
-                    generatePlaylist(selectedMood.dataset.mood, rating);
-                }
             });
         });
-        
+
+        function updateMoodList() {
+            const container = document.getElementById('moodList');
+            container.innerHTML = '';
+            
+            selectedMoods.forEach((moodData, index) => {
+                const moodDiv = document.createElement('div');
+                moodDiv.className = 'mood-item';
+                
+                const moodEmoji = {
+                    'happy': '😃',
+                    'sad': '😞',
+                    'angry': '😡',
+                    'energetic': '⚡'
+                }[moodData.mood];
+
+                moodDiv.innerHTML = `
+                    <div class="mood-info">
+                        <span class="mood-emoji">${moodEmoji}</span>
+                        <span class="mood-name">${moodData.mood}</span>
+                        <span class="mood-intensity">${'★'.repeat(moodData.intensity)}${'☆'.repeat(5-moodData.intensity)}</span>
+                    </div>
+                    <span class="remove-mood" onclick="removeMood(${index})">
+                        <i class="fas fa-times"></i>
+                    </span>
+                `;
+                container.appendChild(moodDiv);
+            });
+        }
+
+        function removeMood(index) {
+            selectedMoods.splice(index, 1);
+            updateMoodList();
+            if (selectedMoods.length === 0) {
+                document.getElementById('saveMood').style.display = 'none';
+            }
+        }
+
+        function saveMood() {
+            if (selectedMoods.length === 0) {
+                alert('Please select both a mood and intensity before saving.');
+                return;
+            }
+
+            const moodData = selectedMoods[0]; // Use the first selected mood
+            const mood = moodData.mood;
+            const intensity = moodData.intensity;
+            const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+
+            console.log('Saving mood:', { mood, intensity, date }); // Debug log
+
+            fetch('/save_mood', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    mood: mood,
+                    intensity: intensity,
+                    date: date
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data); // Debug log
+                if (data.error) {
+                    alert('Error saving mood: ' + data.error);
+                } else {
+                    alert('Mood saved successfully!');
+                    // Show Spotify connection section
+                    document.getElementById('spotifySection').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error saving mood. Please try again.');
+            });
+        }
+
+        // Initially hide Spotify section
+        document.querySelector('.spotify-section').style.display = 'none';
+
         // Mobile Menu Toggle (for responsive design)
         function toggleMobileMenu() {
             const sidebar = document.querySelector('.sidebar');
@@ -1000,15 +1246,17 @@
         // Check screen size and adjust sidebar accordingly
         function checkScreenSize() {
             const sidebar = document.querySelector('.sidebar');
-            if (window.innerWidth <= 480px) {
+            if (window.innerWidth <= 480) {
                 sidebar.style.display = 'none';
             } else {
                 sidebar.style.display = 'flex';
             }
-        };
+        }
         
         window.addEventListener('resize', checkScreenSize);
         window.addEventListener('load', checkScreenSize);
+
+        document.getElementById('saveMood').addEventListener('click', saveMood);
     </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 from urllib.parse import unquote
@@ -7,20 +8,20 @@ import os
 import json
 import requests
 from urllib.parse import urlencode
+import logging
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.secret_key = os.urandom(24)  # Required for session management
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['PREFERRED_URL_SCHEME'] = 'https'
 
-# Spotify configuration
-SPOTIFY_CLIENT_ID = '6b770d2f043948dc9515d3a5f65a5113'
-SPOTIFY_CLIENT_SECRET = 'bbf02678958948eda30ff6bc0e616058'
-SPOTIFY_REDIRECT_URI = 'http://localhost:5000/callback'
-SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/authorize'
-SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # User Model
 class User(db.Model):
@@ -428,38 +429,52 @@ def remedy_details(remedy_name):
     print(f"Found recipe: {recipe['title']}")  # Verify match
     return render_template('remedy.html', remedy=recipe)
 
-@app.route('/callback')
+@app.route('/spotify-callback')
 def spotify_callback():
-    if 'error' in request.args:
-        return jsonify({"error": request.args['error']})
-    
-    if 'code' in request.args:
-        code = request.args['code']
+    try:
+        code = request.args.get('code')
+        if not code:
+            logger.error("No code received from Spotify")
+            return redirect(url_for('index'))
         
         # Exchange code for access token
-        auth_response = requests.post(SPOTIFY_TOKEN_URL, {
+        token_url = 'https://accounts.spotify.com/api/token'
+        token_data = {
             'grant_type': 'authorization_code',
             'code': code,
             'redirect_uri': SPOTIFY_REDIRECT_URI,
             'client_id': SPOTIFY_CLIENT_ID,
-            'client_secret': SPOTIFY_CLIENT_SECRET,
-        })
+            'client_secret': SPOTIFY_CLIENT_SECRET
+        }
         
-        if auth_response.status_code == 200:
-            auth_data = auth_response.json()
-            access_token = auth_data['access_token']
-            refresh_token = auth_data['refresh_token']
+        logger.debug(f"Attempting to exchange code for token with data: {token_data}")
+        response = requests.post(token_url, data=token_data)
+        
+        if response.status_code == 200:
+            token_info = response.json()
+            session['spotify_access_token'] = token_info['access_token']
+            session['spotify_refresh_token'] = token_info['refresh_token']
+            session['token_expires_at'] = datetime.now() + timedelta(seconds=token_info['expires_in'])
             
-            # Store tokens in session
-            session['spotify_access_token'] = access_token
-            session['spotify_refresh_token'] = refresh_token
-            
-            # Redirect back to the main page
-            return redirect(url_for('index'))
+            logger.info("Successfully obtained Spotify access token")
+            return '''
+            <html>
+                <body>
+                    <script>
+                        localStorage.setItem('spotify_access_token', '{}');
+                        window.close();
+                    </script>
+                </body>
+            </html>
+            '''.format(token_info['access_token'])
         else:
-            return jsonify({"error": "Failed to get access token"})
-    
-    return jsonify({"error": "No code provided"})
+            logger.error(f"Failed to get access token. Status code: {response.status_code}")
+            logger.error(f"Response: {response.text}")
+            return redirect(url_for('index'))
+            
+    except Exception as e:
+        logger.error(f"Error in spotify_callback: {str(e)}")
+        return redirect(url_for('index'))
 
 @app.route('/refresh_token')
 def refresh_token():
@@ -485,3 +500,79 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+
+# Spotify API credentials
+SPOTIFY_CLIENT_ID = '6b770d2f043948dc9515d3a5f65a5113'  # Your Spotify Client ID
+SPOTIFY_CLIENT_SECRET = 'bbf02678958948eda30ff6bc0e616058'  # Your Spotify Client Secret
+SPOTIFY_REDIRECT_URI = 'https://YOUR_NGROK_URL.ngrok.io/spotify-callback'  # Replace YOUR_NGROK_URL with your actual ngrok subdomain
+
+class Mood(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    mood = db.Column(db.String(50), nullable=False)
+    intensity = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
+    # Relationship with User
+    user = db.relationship('User', backref=db.backref('moods', lazy=True))
+
+    def __repr__(self):
+        return f'<Mood {self.mood} {self.intensity} {self.date}>'
+
+@app.route('/save_mood', methods=['POST'])
+def save_mood():
+    try:
+        if 'user_id' not in session:
+            return jsonify({'error': 'User not logged in'}), 401
+
+        data = request.get_json()
+        mood = data.get('mood')
+        intensity = data.get('intensity')
+        date = data.get('date')
+        
+        app.logger.info(f"Received mood data: mood={mood}, intensity={intensity}, date={date}")
+        
+        if not all([mood, intensity, date]):
+            app.logger.error("Missing required mood data")
+            return jsonify({'error': 'Missing required mood data'}), 400
+
+        new_mood = Mood(
+            user_id=session['user_id'],
+            mood=mood,
+            intensity=intensity,
+            date=datetime.strptime(date, '%Y-%m-%d')
+        )
+        db.session.add(new_mood)
+        db.session.commit()
+        
+        app.logger.info(f"Successfully saved mood: {new_mood.id}")
+        return jsonify({'message': 'Mood saved successfully'})
+    except Exception as e:
+        app.logger.error(f"Error saving mood: {str(e)}")
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/get_mood_history')
+def get_mood_history():
+    try:
+        if 'user_id' not in session:
+            return jsonify({'error': 'User not logged in'}), 401
+
+        moods = Mood.query.filter_by(user_id=session['user_id']).order_by(Mood.date.desc()).all()
+        app.logger.info(f"Retrieved {len(moods)} moods from database")
+        
+        mood_data = [{
+            'mood': mood.mood,
+            'intensity': mood.intensity,
+            'date': mood.date.strftime('%Y-%m-%d')
+        } for mood in moods]
+        
+        app.logger.info(f"Mood data: {mood_data}")
+        return jsonify(mood_data)
+    except Exception as e:
+        app.logger.error(f"Error retrieving mood history: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/mood')
+def mood_history():
+    return render_template('mood.html')
