@@ -1,0 +1,29 @@
+{
+    "recipes": [
+        {
+            "id": 1,
+            "title": "Ginger Tea",
+            "description": "A soothing tea to help with menstrual cramps",
+            "ingredients": [
+                "Fresh ginger root",
+                "Honey",
+                "Lemon",
+                "Water"
+            ],
+            "instructions": "1. Slice ginger root\n2. Boil water\n3. Add ginger and simmer for 5 minutes\n4. Strain and add honey and lemon to taste"
+        },
+        {
+            "id": 2,
+            "title": "Iron-Rich Smoothie",
+            "description": "A nutritious smoothie to help with iron levels during menstruation",
+            "ingredients": [
+                "Spinach",
+                "Banana",
+                "Berries",
+                "Almond milk",
+                "Chia seeds"
+            ],
+            "instructions": "1. Add all ingredients to blender\n2. Blend until smooth\n3. Serve immediately"
+        }
+    ]
+} 
