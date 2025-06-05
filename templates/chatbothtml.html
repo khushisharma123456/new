@@ -5,67 +5,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloom</title>
-
-    <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" type="text/css" href="css/chatbot.css">
-
-    </head>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/chatbot.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
     <div class="app-container">
         <div class="header">
             <div class="logo-container">
-                <img src="Images/logo .png" alt="logo" class="logo">
+                <span class="logo-text">Bloom</span>
             </div>
             <div class="left-header">
                 <a href="#" class="home">Home</a>
-                <img src="Images/profile.png" alt="prf" class="profile">
+                <div class="user-profile">
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: #B5D8E6;"></i>
+                </div>
             </div>
         </div>
 
         <div class="body">
             <div class="left">
-                <h3>Read Specifically About : </h3>
-                <p>Stress and Anxiety</p>
-                <p>Sleep Issues and Fatigue</p>
-                <p>Low Mood and Motvation</p>
-                <p>Social Anxiety and Isolation</p>
-                <p>Panic Attack Support</p>
-                <p>Self Care and Emotional Well-Being</p>
-                <p>Period related Mood Swings</p>
-                <p>PMS-Related Fatigue and Discomfort</p>
+                <!-- Chat History Section -->
+                <div class="chat-history-section">
+                    <div class="history-header">
+                        <h3>Previous Chats</h3>
+                        <button class="clear-history-btn" onclick="clearHistory()">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="chat-history-list" id="chatHistoryList">
+                        <!-- Chat history will be populated here dynamically -->
+                        <p class="no-history-message">No previous chats</p>
+                    </div>
+                </div>
+                <button class="new-chat-btn" id="newChatBtn" type="button">
+                    <i class="fas fa-plus"></i> New Chat
+                </button>
             </div>
             <div class="line">
                 <div></div>
             </div>
             <div class="right">
-                <div class="ai-prompt" id="content">
-                    <div class="up">
-                        <img src="Images/logo1.png" alt="ai-logo" class="ai-logo">
-                        <p id="first">Hi, How can I help you?</p>
+                <div class="chat-container" id="chatContainer">
+                    <div class="welcome-screen" id="welcomeScreen">
+                        <div class="welcome-content">
+                            <img src="Images/logo1.png" alt="Bloom AI" class="welcome-logo">
+                            <h2>Welcome to Bloom</h2>
+                            <p>How can I help you today?</p>
+                        </div>
                     </div>
-                    
-                    <div class="down">
-                        <button class="button"><i class="fa-solid fa-copy" class="copy"></i>Copy</button>
+                    <div class="chat-messages" id="chatMessages" style="display: none;">
+                        <!-- Chat messages will be added here dynamically -->
                     </div>
-
                 </div>
-                <!--<div class="up-down" id = "content">
-                    <img src="Images/ai-logo.png" alt="ai-logo" class="ai-logo">
-                    <p id="second">Hello!</p>
-                </div>-->
                 <div class="input-area">
-                    <input type="text" class="chat-input" id="userInput" placeholder="Type a message..." autocomplete="off">
-                    <button onclick="sendMessage()" class="send-button"><i class="fas fa-paper-plane"></i></button>
+                    <div class="attachment-dropdown">
+                        <button class="attachment-btn" id="attachmentBtn">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <div class="dropdown-content" id="attachmentDropdown">
+                            <button class="dropdown-item" data-type="photo">
+                                <i class="fas fa-image"></i> Photos
+                            </button>
+                            <button class="dropdown-item" data-type="video">
+                                <i class="fas fa-video"></i> Videos
+                            </button>
+                            <button class="dropdown-item" data-type="file">
+                                <i class="fas fa-file"></i> Files
+                            </button>
+                        </div>
+                    </div>
+                    <input type="file" id="fileInput" style="display: none;" accept="*/*">
+                    <button class="mic-btn" id="micBtn" title="Speak">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <div class="typing-wrapper">
+                        <input type="text" class="chat-input" id="userInput" placeholder="Type a message..." autocomplete="off">
+                        <div class="typing-indicator" style="display: none;">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <button class="send-button" id="sendBtn" type="button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    <script src="config.js"></script>
     <script src="css/chatbotjs.js"></script>
+    <script>
+        // Remove inline onclick attributes from buttons if present
+        // Ensure global functions are available
+        window.sendMessage = window.sendMessage || function() { };
+        window.createNewChat = window.createNewChat || function() { };
 
+        // Attach event listeners after chatbotjs.js is loaded
+        window.addEventListener('DOMContentLoaded', function () {
+            var sendBtn = document.getElementById('sendBtn');
+            if (sendBtn) {
+                sendBtn.onclick = function (e) {
+                    if (typeof window.sendMessage === 'function') window.sendMessage();
+                };
+            }
+            var newChatBtn = document.getElementById('newChatBtn');
+            if (newChatBtn) {
+                newChatBtn.onclick = function (e) {
+                    if (typeof window.createNewChat === 'function') window.createNewChat();
+                };
+            }
+        });
+    </script>
 </body>
 
 </html>
