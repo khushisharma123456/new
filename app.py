@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from urllib.parse import unquote
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -33,28 +34,26 @@ class PainEntry(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-class Recipe(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    image = db.Column(db.String(100), nullable=False)
-    ingredients = db.Column(db.Text, nullable=False)
-    instructions = db.Column(db.Text, nullable=False)
 
-class SurveyResponse(db.Model):
+class SurveyResponse(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    
-    # Survey questions
-    q1_feel_off = db.Column(db.String(20))
-    q2_skin_changes = db.Column(db.String(20))
-    q3_cravings_shift = db.Column(db.String(20))
-    q4_energy_changes = db.Column(db.String(20))
-    q5_workout_variation = db.Column(db.String(20))
-    q6_cycle_length = db.Column(db.Integer)
-    q7_period_length = db.Column(db.Integer)
-    q8_PMS = db.Column(db.String(20))
-    q9_health_conditions = db.Column(db.String(20))
+
+    q1_age = db.Column(db.Integer)
+    q2_last_period = db.Column(db.Date)
+    q3_period_duration = db.Column(db.String(30))
+    q4_cycle_length = db.Column(db.String(30))
+    q5_period_regularity = db.Column(db.String(30))
+    q6_hair_growth = db.Column(db.String(10))
+    q7_acne = db.Column(db.String(10))
+    q8_hair_thinning = db.Column(db.String(10))
+    q9_weight_gain = db.Column(db.String(30))
+    q10_sugar_craving = db.Column(db.String(10))
+    q11_family_history = db.Column(db.String(30))
+    q12_fertility = db.Column(db.String(30))
+    q13_mood_swings = db.Column(db.String(30))
+
     
 @app.route('/')
 def home():
@@ -127,29 +126,30 @@ def survey():
 
     if request.method == 'POST':
         try:
-            # Save survey responses
             new_response = SurveyResponse(
                 user_id=session['user_id'],
-                q1_feel_off=request.form.get('q1'),
-                q2_skin_changes=request.form.get('q2'),
-                q3_cravings_shift=request.form.get('q3'),
-                q4_energy_changes=request.form.get('q4'),
-                q5_workout_variation=request.form.get('q5'),
-                q6_cycle_length=request.form.get('cycle_length', type=int),
-                q7_period_length=request.form.get('period_length', type=int),
-                q8_PMS=request.form.get('q8'),
-                q9_health_conditions=request.form.get('q9')
+                q1_age=request.form.get('q1', type=int),
+                q2_last_period=datetime.strptime(request.form.get('q2'), '%Y-%m-%d').date(),
+                q3_period_duration=request.form.get('q3'),  # Period duration select has same `name="q2"` — needs correction!
+                q4_cycle_length=request.form.get('q4'),
+                q5_period_regularity=request.form.get('q5'),
+                q6_hair_growth=request.form.get('q6'),
+                q7_acne=request.form.get('q7'),
+                q8_hair_thinning=request.form.get('q8'),
+                q9_weight_gain=request.form.get('q9'),
+                q10_sugar_craving=request.form.get('q10'),
+                q11_family_history=request.form.get('q11'),
+                q12_fertility=request.form.get('q12'),
+                q13_mood_swings=request.form.get('q13')
             )
 
-            # Update user's cycle and period length
-            user.cycle_length = request.form.get('cycle_length', type=int)
-            user.period_length = request.form.get('period_length', type=int)
             user.survey_completed = True
-
             db.session.add(new_response)
             db.session.commit()
+
             flash('Thank you for completing the survey!', 'success')
             return redirect(url_for('dashboard'))
+
         except Exception as e:
             db.session.rollback()
             flash('Error saving survey responses. Please try again.', 'danger')
@@ -166,13 +166,44 @@ def dashboard():
     if 'user_id' not in session:
         flash('Please log in first!', 'warning')
         return redirect(url_for('login'))
-        
+
     user = User.query.get(session['user_id'])
+
     if not user.survey_completed:
         flash('Please complete the survey first!', 'warning')
         return redirect(url_for('survey'))
-        
-    return render_template('dashboard.html', user_name=session['user_name'])
+
+    # ⬇️ Fetch latest survey response
+    survey = SurveyResponse.query.filter_by(user_id=user.id).order_by(SurveyResponse.timestamp.desc()).first()
+
+    if not survey or not survey.q2_last_period:
+        flash('Survey data is missing or incomplete.', 'warning')
+        return redirect(url_for('survey'))
+
+    # Calculate cycle day and phase
+    today = datetime.utcnow().date()
+    days_since_period = (today - survey.q2_last_period).days
+    current_day = (days_since_period % user.cycle_length) + 1 if days_since_period >= 0 else 0
+
+    if current_day <= user.period_length:
+        current_phase = "Menstrual"
+    elif current_day <= (user.cycle_length - 14):
+        current_phase = "Follicular"
+    elif current_day <= (user.cycle_length - 9):
+        current_phase = "Ovulation"
+    else:
+        current_phase = "Luteal"
+
+    return render_template(
+        'index.html',
+        user_name=session['user_name'],
+        current_day=current_day,
+        current_phase=current_phase,
+        cycle_length=user.cycle_length,
+        period_length=user.period_length
+    )
+
+    
 # Period Tracker Page (Only for logged-in users)
 pain_mapping = {'No Pain': 0, 'Mild': 3, 'Moderate': 5, 'Severe': 10}
 flow_mapping = {'None': 0, 'Light': 2, 'Medium': 5, 'Heavy': 8}
@@ -291,12 +322,6 @@ def New_Pose():
         return redirect(url_for('login'))
     return render_template('/New Pose.html')
 
-@app.route('/recipe/<int:recipe_id>')
-def recipe_page(recipe_id):
-    recipe = Recipe.query.get_or_404(recipe_id)
-    ingredients = recipe.ingredients.split(',')
-    instructions = recipe.instructions.split('.')
-    return render_template('recipe.html', recipe=recipe, ingredients=ingredients, instructions=instructions)
 
 @app.route('/yoga')
 def yoga():
@@ -312,12 +337,12 @@ def admin():
         return redirect(url_for('login'))
     return render_template('admin.html', user_name=session['user_name'])
 
-@app.route('/get-consultation')
+@app.route('/consultation')
 def consultation():
     if 'user_id' not in session:
         flash('Please log in first!', 'warning')
         return redirect(url_for('login'))
-    return render_template('get-consultation.html', user_name=session['user_name'])
+    return render_template('consultation.html', user_name=session['user_name'])
 
 @app.route('/mood')
 def mood():
@@ -360,6 +385,39 @@ def logout():
     flash('Logged out successfully!', 'info')
     return redirect(url_for('home'))
 
+#=====================================================================================
+def load_recipes():
+    try:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        json_path = os.path.join(base_dir, 'data', 'recipes.json')
+        
+        with open(json_path) as f:
+            data = json.load(f)
+            return {recipe['title'].lower(): recipe for recipe in data['recipes']}
+    except Exception as e:
+        print(f"Error loading recipes: {str(e)}")
+        return {}
+
+recipes = load_recipes()
+
+@app.route('/remedy/<path:remedy_name>')
+def remedy_details(remedy_name):
+    print(f"\n\n=== DEBUG: Received request for: {remedy_name} ===")  # Check terminal
+    decoded_name = unquote(remedy_name).lower()
+    print(f"Decoded name: {decoded_name}")
+    
+    recipe = recipes.get(decoded_name)
+    if not recipe:
+        recipe = recipes.get(remedy_name.replace('-', ' ').lower())
+    
+    if not recipe:
+        print("Recipe not found!")
+        abort(404)
+    
+    print(f"Found recipe: {recipe['title']}")  # Verify match
+    return render_template('remedy.html', remedy=recipe)
+
+            
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
