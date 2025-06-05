@@ -1,13 +1,24 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, abort
+from flask import Flask, render_template, request, redirect, url_for, session, flash, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from datetime import datetime, timedelta
 from urllib.parse import unquote
+import os
+import json
+import requests
+from urllib.parse import urlencode
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Spotify configuration
+SPOTIFY_CLIENT_ID = '6b770d2f043948dc9515d3a5f65a5113'
+SPOTIFY_CLIENT_SECRET = 'bbf02678958948eda30ff6bc0e616058'
+SPOTIFY_REDIRECT_URI = 'http://localhost:5000/callback'
+SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/authorize'
+SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
 db = SQLAlchemy(app)
 
@@ -416,6 +427,58 @@ def remedy_details(remedy_name):
     
     print(f"Found recipe: {recipe['title']}")  # Verify match
     return render_template('remedy.html', remedy=recipe)
+
+@app.route('/callback')
+def spotify_callback():
+    if 'error' in request.args:
+        return jsonify({"error": request.args['error']})
+    
+    if 'code' in request.args:
+        code = request.args['code']
+        
+        # Exchange code for access token
+        auth_response = requests.post(SPOTIFY_TOKEN_URL, {
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': SPOTIFY_REDIRECT_URI,
+            'client_id': SPOTIFY_CLIENT_ID,
+            'client_secret': SPOTIFY_CLIENT_SECRET,
+        })
+        
+        if auth_response.status_code == 200:
+            auth_data = auth_response.json()
+            access_token = auth_data['access_token']
+            refresh_token = auth_data['refresh_token']
+            
+            # Store tokens in session
+            session['spotify_access_token'] = access_token
+            session['spotify_refresh_token'] = refresh_token
+            
+            # Redirect back to the main page
+            return redirect(url_for('index'))
+        else:
+            return jsonify({"error": "Failed to get access token"})
+    
+    return jsonify({"error": "No code provided"})
+
+@app.route('/refresh_token')
+def refresh_token():
+    if 'spotify_refresh_token' not in session:
+        return jsonify({"error": "No refresh token"})
+    
+    refresh_response = requests.post(SPOTIFY_TOKEN_URL, {
+        'grant_type': 'refresh_token',
+        'refresh_token': session['spotify_refresh_token'],
+        'client_id': SPOTIFY_CLIENT_ID,
+        'client_secret': SPOTIFY_CLIENT_SECRET,
+    })
+    
+    if refresh_response.status_code == 200:
+        refresh_data = refresh_response.json()
+        session['spotify_access_token'] = refresh_data['access_token']
+        return jsonify({"access_token": refresh_data['access_token']})
+    else:
+        return jsonify({"error": "Failed to refresh token"})
 
             
 if __name__ == '__main__':

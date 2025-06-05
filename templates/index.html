@@ -483,39 +483,40 @@
         }
 
         .mood-option {
+            padding: 15px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            background: var(--accent-lavender);
             display: flex;
             flex-direction: column;
             align-items: center;
-            cursor: pointer;
+            gap: 10px;
         }
 
-        .mood-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-            transition: all 0.3s ease;
+        .mood-option .mood-icon {
+            font-size: 32px;
         }
 
-        .mood-option:hover .mood-icon {
-            transform: scale(1.2);
+        .mood-option .mood-name {
+            font-size: 16px;
+            color: var(--text-dark);
         }
 
-        .mood-name {
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .stars {
+        .mood-option .stars {
             display: flex;
-            gap: 2px;
+            gap: 5px;
         }
 
-        .star {
-            color: #DDD;
+        .mood-option .star {
+            font-size: 20px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            color: #ddd;
+            transition: color 0.3s ease;
         }
 
-        .star:hover, .star.active {
+        .mood-option .star.active {
             color: #FFD700;
         }
 
@@ -529,84 +530,60 @@
         }
 
         /* Spotify Section */
-        .spotify-container {
-            background-color: white;
-            border-radius: 16px;
+        .spotify-section {
+            margin-top: 30px;
             padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            background: #282828;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
         }
 
-        .spotify-button {
-            background-color: #1DB954;
+        .spotify-login-btn {
+            background: #1DB954;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            display: inline-flex;
             align-items: center;
-            margin-top: 15px;
+            gap: 8px;
         }
 
-        .spotify-button i {
-            margin-right: 8px;
+        .spotify-login-btn i {
+            font-size: 20px;
         }
 
-        .spotify-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .spotify-login-btn:hover {
+            background: #1ed760;
         }
 
         .playlist-display {
             margin-top: 20px;
-            display: none;
-            align-items: center;
-            background-color: #F5F5F5;
-            padding: 15px;
-            border-radius: 8px;
+            text-align: center;
         }
 
-        .playlist-cover {
-            width: 60px;
-            height: 60px;
-            background-color: #333;
-            border-radius: 4px;
-            margin-right: 15px;
+        .playlist-display iframe {
+            border-radius: 12px;
+            margin: 20px 0;
         }
 
-        .playlist-info {
-            flex-grow: 1;
-        }
-
-        .playlist-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .playlist-description {
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        .play-button {
-            background-color: #1DB954;
+        .open-spotify-btn {
+            display: inline-block;
+            background: #1DB954;
             color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin-top: 10px;
+            transition: background 0.3s ease;
         }
 
-        .play-button:hover {
-            transform: scale(1.1);
+        .open-spotify-btn:hover {
+            background: #1ed760;
         }
 
         /* Responsive Design */
@@ -682,6 +659,114 @@
                 width: 100%;
             }
         }
+
+        /* Mood and Spotify Section */
+        .mood-spotify-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .mood-spotify-section h2 {
+            font-family: 'Nunito', sans-serif;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+        }
+
+        .mood-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mood-option {
+            padding: 15px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            background: var(--accent-lavender);
+        }
+
+        .mood-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mood-option.selected {
+            background: var(--accent-pink);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .star {
+            font-size: 28px;
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.3s ease;
+        }
+
+        .star.active {
+            color: #FFD700;
+        }
+
+        .spotify-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #282828;
+            border-radius: 12px;
+            color: white;
+        }
+
+        .spotify-login-btn {
+            background: #1DB954;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .spotify-login-btn:hover {
+            background: #1ed760;
+        }
+
+        .playlist-display {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .playlist-display iframe {
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .open-spotify-btn {
+            display: inline-block;
+            background: #1DB954;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .open-spotify-btn:hover {
+            background: #1ed760;
+        }
     </style>
 </head>
 <body>
@@ -755,171 +840,119 @@
     </div>
     
     <!-- Main Content -->
-    <!-- Main Content -->
-<div class="main-content">
-    <div class="greeting">
-        <h1>Welcome, {{ user_name }}!</h1>
-        {% if current_day > 0 %}
-            <p>You're on Day {{ current_day }} of your {{ current_phase }} Phase</p>
-        {% else %}
-            <p>Track your period to see where you are in your cycle</p>
-        {% endif %}
-    </div>
-    
-    <!-- Cycle Sync Graph -->
-<div class="graph-container">
-    <div class="graph-header">
-        <div class="graph-title">Cycle Sync</div>
-        <div class="graph-encouragement">
-            Let's get you to full-sync today! <i class="fas fa-seedling"></i>
-        </div>
-    </div>
-    
-    <div class="graph">
-        <!-- Gradient area below the line -->
-        <div class="graph-gradient-area"></div>
-        
-        <!-- Main line -->
-        <div class="graph-line"></div>
-        
-        <!-- Current day indicator -->
-        {% set cycle_percent = (current_day / cycle_length * 100) if current_day > 0 else 0 %}
-        <div class="graph-dot" style="left: {{ cycle_percent }}%;">
-            <div class="dot"></div>
-            <div class="dot-label">Today</div>
+    <div class="main-content">
+        <div class="greeting">
+            <h1>Welcome, {{ user_name }}!</h1>
+            {% if current_day > 0 %}
+                <p>You're on Day {{ current_day }} of your {{ current_phase }} Phase</p>
+            {% else %}
+                <p>Track your period to see where you are in your cycle</p>
+            {% endif %}
         </div>
         
-        <!-- Phase labels -->
-        <div class="graph-phase-labels">
-            <div class="phase-label">M1</div>
-            <div class="phase-label">M2</div>
-            <div class="phase-label">M3</div>
-            <div class="phase-label">Soon</div>
-        </div>
-        
-        <!-- Symptom labels -->
-        <div class="graph-symptom-labels">
-            <div class="symptom-label" style="left: 20%;">Dry skin</div>
-            <div class="symptom-label" style="left: 50%;">Low energy</div>
-            <div class="symptom-label" style="left: 80%;">Cravings</div>
-        </div>
-        
-        <!-- Zone labels -->
-        <div class="graph-zone-labels">
-            <div class="zone-label" style="left: 20%;">No change zone</div>
-            <div class="zone-label" style="left: 70%;">Harmony zone</div>
-        </div>
-    </div>
-</div>
-    
-    <!-- Symptoms Section -->
-    <div class="symptoms-container">
-        <div class="section-title">Are you feeling any symptoms today?</div>
-        <div class="symptom-chips">
-            <div class="symptom-chip">Bloating</div>
-            <div class="symptom-chip selected">Cramps</div>
-            <div class="symptom-chip">Fatigue</div>
-            <div class="symptom-chip">Headache</div>
-            <div class="symptom-chip">Tender Breasts</div>
-            <div class="symptom-chip add-symptom">
-                <i class="fas fa-plus"></i>
-                <span>Custom</span>
+        <!-- Cycle Sync Graph -->
+    <div class="graph-container">
+        <div class="graph-header">
+            <div class="graph-title">Cycle Sync</div>
+            <div class="graph-encouragement">
+                Let's get you to full-sync today! <i class="fas fa-seedling"></i>
             </div>
         </div>
-    </div>
-    
-    <!-- Cards Section -->
-    <div class="cards-container">
-        <div class="card">
-            <div class="card-title">Waiting for your next Yoga Session</div>
-            <div class="card-content">Gentle yoga can help relieve menstrual discomfort. Join our live session in 15 minutes!</div>
-            <button class="card-button">Join Now</button>
-        </div>
         
-        <div class="card">
-            <div class="card-title">Check out today's wellness tip</div>
-            <div class="card-content">"Stay hydrated with warm lemon water to help reduce bloating during your period."</div>
-            <button class="card-button teal">Explore Now</button>
-        </div>
-    </div>
-    
-    <!-- Mood Section -->
-    <div class="mood-container">
-        <div class="section-title">How do you feel today?</div>
-        
-        <div class="mood-options">
-            <div class="mood-option" data-mood="happy">
-                <div class="mood-icon">😊</div>
-                <div class="mood-name">Happy</div>
-                <div class="stars">
-                    <div class="star" data-rating="1">★</div>
-                    <div class="star" data-rating="2">★</div>
-                    <div class="star" data-rating="3">★</div>
-                    <div class="star" data-rating="4">★</div>
-                    <div class="star" data-rating="5">★</div>
-                </div>
+        <div class="graph">
+            <!-- Gradient area below the line -->
+            <div class="graph-gradient-area"></div>
+            
+            <!-- Main line -->
+            <div class="graph-line"></div>
+            
+            <!-- Current day indicator -->
+            {% set cycle_percent = (current_day / cycle_length * 100) if current_day > 0 else 0 %}
+            <div class="graph-dot" style="left: {{ cycle_percent }}%;">
+                <div class="dot"></div>
+                <div class="dot-label">Today</div>
             </div>
             
-            <div class="mood-option" data-mood="angry">
-                <div class="mood-icon">😠</div>
-                <div class="mood-name">Angry</div>
-                <div class="stars">
-                    <div class="star" data-rating="1">★</div>
-                    <div class="star" data-rating="2">★</div>
-                    <div class="star" data-rating="3">★</div>
-                    <div class="star" data-rating="4">★</div>
-                    <div class="star" data-rating="5">★</div>
-                </div>
+            <!-- Phase labels -->
+            <div class="graph-phase-labels">
+                <div class="phase-label">M1</div>
+                <div class="phase-label">M2</div>
+                <div class="phase-label">M3</div>
+                <div class="phase-label">Soon</div>
             </div>
             
-            <div class="mood-option" data-mood="energetic">
-                <div class="mood-icon">⚡</div>
-                <div class="mood-name">Energetic</div>
-                <div class="stars">
-                    <div class="star" data-rating="1">★</div>
-                    <div class="star" data-rating="2">★</div>
-                    <div class="star" data-rating="3">★</div>
-                    <div class="star" data-rating="4">★</div>
-                    <div class="star" data-rating="5">★</div>
-                </div>
+            <!-- Symptom labels -->
+            <div class="graph-symptom-labels">
+                <div class="symptom-label" style="left: 20%;">Dry skin</div>
+                <div class="symptom-label" style="left: 50%;">Low energy</div>
+                <div class="symptom-label" style="left: 80%;">Cravings</div>
             </div>
             
-            <div class="mood-option" data-mood="sad">
-                <div class="mood-icon">😢</div>
-                <div class="mood-name">Sad</div>
-                <div class="stars">
-                    <div class="star" data-rating="1">★</div>
-                    <div class="star" data-rating="2">★</div>
-                    <div class="star" data-rating="3">★</div>
-                    <div class="star" data-rating="4">★</div>
-                    <div class="star" data-rating="5">★</div>
+            <!-- Zone labels -->
+            <div class="graph-zone-labels">
+                <div class="zone-label" style="left: 20%;">No change zone</div>
+                <div class="zone-label" style="left: 70%;">Harmony zone</div>
+            </div>
+        </div>
+    </div>
+        
+        <!-- Symptoms Section -->
+        <div class="symptoms-container">
+            <div class="section-title">Are you feeling any symptoms today?</div>
+            <div class="symptom-chips">
+                <div class="symptom-chip">Bloating</div>
+                <div class="symptom-chip selected">Cramps</div>
+                <div class="symptom-chip">Fatigue</div>
+                <div class="symptom-chip">Headache</div>
+                <div class="symptom-chip">Tender Breasts</div>
+                <div class="symptom-chip add-symptom">
+                    <i class="fas fa-plus"></i>
+                    <span>Custom</span>
                 </div>
             </div>
         </div>
         
-        <div class="mood-feedback" id="moodFeedback"></div>
-    </div>
-    
-    <!-- Spotify Section -->
-    <div class="spotify-container">
-        <div class="section-title">Want music to match your mood?</div>
-        <button class="spotify-button" id="connectSpotify">
-            <i class="fab fa-spotify"></i>
-            <span>Connect Spotify</span>
-        </button>
-        
-        <div class="playlist-display" id="playlistDisplay">
-            <div class="playlist-cover"></div>
-            <div class="playlist-info">
-                <div class="playlist-name">Calm Flow</div>
-                <div class="playlist-description">Gentle melodies for your menstrual days</div>
+        <!-- Cards Section -->
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-title">Waiting for your next Yoga Session</div>
+                <div class="card-content">Gentle yoga can help relieve menstrual discomfort. Join our live session in 15 minutes!</div>
+                <button class="card-button">Join Now</button>
             </div>
-            <button class="play-button">
-                <i class="fas fa-play"></i>
-            </button>
+            
+            <div class="card">
+                <div class="card-title">Check out today's wellness tip</div>
+                <div class="card-content">"Stay hydrated with warm lemon water to help reduce bloating during your period."</div>
+                <button class="card-button teal">Explore Now</button>
+            </div>
+        </div>
+        
+        <!-- Mood and Spotify Section -->
+        <div class="mood-spotify-section">
+            <h2>How are you feeling today?</h2>
+            <div class="mood-selector">
+                <div class="mood-option" data-mood="happy">😃</div>
+                <div class="mood-option" data-mood="sad">😞</div>
+                <div class="mood-option" data-mood="angry">😡</div>
+                <div class="mood-option" data-mood="energetic">⚡</div>
+            </div>
+
+            <div class="star-rating">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+
+            <div class="spotify-section">
+                <button id="spotify-login" class="spotify-login-btn">
+                    Connect with Spotify
+                </button>
+                <div id="playlistDisplay" class="playlist-display"></div>
+            </div>
         </div>
     </div>
-</div>
 
     <script>
         // Symptom Chip Selection
@@ -930,60 +963,32 @@
             });
         });
         
-        // Mood Rating System
-        const moodOptions = document.querySelectorAll('.mood-option');
-        moodOptions.forEach(option => {
-            const stars = option.querySelectorAll('.star');
-            let selectedRating = 0;
-            
-            stars.forEach(star => {
-                star.addEventListener('click', (e) => {
-                    const rating = parseInt(e.target.getAttribute('data-rating'));
-                    selectedRating = rating;
-                    
-                    // Update stars
-                    stars.forEach((s, index) => {
-                        if (index < rating) {
-                            s.classList.add('active');
-                        } else {
-                            s.classList.remove('active');
-                        }
-                    });
-                    
-                    // Show feedback
-                    const mood = option.getAttribute('data-mood');
-                    const moodNames = {
-                        happy: 'Happy',
-                        angry: 'Angry',
-                        energetic: 'Energetic',
-                        sad: 'Sad'
-                    };
-                    
-                    const feedback = document.getElementById('moodFeedback');
-                    feedback.textContent = `You feel ${rating}-star ${moodNames[mood]} today`;
-                    feedback.style.display = 'block';
-                    
-                    // Reset other mood options
-                    moodOptions.forEach(otherOption => {
-                        if (otherOption !== option) {
-                            const otherStars = otherOption.querySelectorAll('.star');
-                            otherStars.forEach(s => s.classList.remove('active'));
-                        }
-                    });
-                });
+        // Mood selection
+        document.querySelectorAll('.mood-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                const mood = this.dataset.mood;
+                const rating = document.querySelectorAll('.star.active').length;
+                if (rating > 0) {
+                    generatePlaylist(mood, rating);
+                }
             });
         });
-        
-        // Spotify Connection
-        const connectSpotify = document.getElementById('connectSpotify');
-        const playlistDisplay = document.getElementById('playlistDisplay');
-        
-        connectSpotify.addEventListener('click', () => {
-            connectSpotify.innerHTML = '<i class="fas fa-check"></i><span>Connected</span>';
-            connectSpotify.style.backgroundColor = '#191414';
-            playlistDisplay.style.display = 'flex';
-            
-            // In a real app, you would authenticate with Spotify API here
+
+        // Star rating
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.dataset.rating;
+                document.querySelectorAll('.star').forEach(s => {
+                    s.classList.toggle('active', s.dataset.rating <= rating);
+                });
+                
+                const selectedMood = document.querySelector('.mood-option.selected');
+                if (selectedMood) {
+                    generatePlaylist(selectedMood.dataset.mood, rating);
+                }
+            });
         });
         
         // Mobile Menu Toggle (for responsive design)

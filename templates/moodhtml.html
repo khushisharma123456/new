@@ -6,6 +6,72 @@
     <title>Daily Mood Tracker - Reflect, Track, Thrive</title>
     <link rel="icon" href="assets/Daily Mood Tracker.png" type="image/x-icon">
     <link rel="stylesheet" href="css/moodcss.css">
+    <style>
+        .spotify-login-btn {
+            background: #1DB954;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background 0.3s ease;
+        }
+
+        .spotify-login-btn:hover {
+            background: #1ed760;
+        }
+
+        .playlist-display {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .open-spotify-btn {
+            display: block;
+            text-align: center;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background: #1DB954;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .open-spotify-btn:hover {
+            background: #1ed760;
+        }
+
+        .spotify-login-prompt {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-message {
+            color: #ff4444;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .star {
+            font-size: 24px;
+            cursor: pointer;
+            color: #ddd;
+        }
+
+        .star.active {
+            color: #ffd700;
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
@@ -35,6 +101,14 @@
                     <div class="mood-option" data-mood="neutral">😐</div>
                     <div class="mood-option" data-mood="sad">😞</div>
                     <div class="mood-option" data-mood="angry">😡</div>
+                </div>
+
+                <div class="star-rating">
+                    <span class="star" data-rating="1">★</span>
+                    <span class="star" data-rating="2">★</span>
+                    <span class="star" data-rating="3">★</span>
+                    <span class="star" data-rating="4">★</span>
+                    <span class="star" data-rating="5">★</span>
                 </div>
 
                 <div class="note-section">
@@ -80,5 +154,6 @@
     <audio id="sound-happy" src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU..."></audio>
     
     <script src="css/moodjs.js"></script>
+    <script src="spotify-integration.js"></script>
 </body>
 </html>
