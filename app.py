@@ -496,10 +496,7 @@ def refresh_token():
         return jsonify({"error": "Failed to refresh token"})
 
             
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+
 
 # Spotify API credentials
 SPOTIFY_CLIENT_ID = '6b770d2f043948dc9515d3a5f65a5113'  # Your Spotify Client ID
@@ -623,3 +620,8 @@ def get_mood_history():
 @app.route('/mood')
 def mood_history():
     return render_template('mood.html')
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
