@@ -29,6 +29,7 @@ class User(db.Model):
     full_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    phone_number = db.Column(db.String(20), nullable=True)  # Added phone_number field
     survey_completed = db.Column(db.Boolean, default=False)
     cycle_length = db.Column(db.Integer, default=28)  # Added to store user's cycle length
     period_length = db.Column(db.Integer, default=5)  # Added to store user's period length
@@ -391,11 +392,22 @@ def chatbot():
         return redirect(url_for('login'))
     return render_template('chatbot.html')
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
-    session.clear()
-    flash('Logged out successfully!', 'info')
-    return redirect(url_for('home'))
+    try:
+        # Clear the session
+        session.clear()
+        # Return success response
+        return jsonify({
+            'success': True,
+            'message': 'Logged out successfully',
+            'redirect': url_for('index')
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': 'Error during logout'
+        }), 500
 
 #=====================================================================================
 def load_recipes():
@@ -620,6 +632,80 @@ def get_mood_history():
 @app.route('/mood')
 def mood_history():
     return render_template('mood.html')
+
+@app.route('/api/change-password', methods=['POST'])
+def change_password():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Please log in first'}), 401
+    
+    data = request.get_json()
+    current_password = data.get('current_password')
+    new_password = data.get('new_password')
+    
+    if not current_password or not new_password:
+        return jsonify({'success': False, 'message': 'Please provide both current and new password'}), 400
+    
+    user = User.query.get(session['user_id'])
+    if not user:
+        return jsonify({'success': False, 'message': 'User not found'}), 404
+    
+    # Verify current password
+    if not check_password_hash(user.password, current_password):
+        return jsonify({'success': False, 'message': 'Current password is incorrect'}), 400
+    
+    # Validate new password
+    if len(new_password) < 8:
+        return jsonify({'success': False, 'message': 'New password must be at least 8 characters long'}), 400
+    
+    # Check for at least one number and one special character
+    if not any(char.isdigit() for char in new_password):
+        return jsonify({'success': False, 'message': 'New password must contain at least one number'}), 400
+    
+    if not any(char in '@$!%*#?&' for char in new_password):
+        return jsonify({'success': False, 'message': 'New password must contain at least one special character (@$!%*#?&)'}), 400
+    
+    try:
+        # Update password
+        user.password = generate_password_hash(new_password, method='pbkdf2:sha256')
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Password updated successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': 'An error occurred while updating password'}), 500
+
+@app.route('/api/update-profile', methods=['POST'])
+def update_profile():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Please log in first'}), 401
+    
+    data = request.get_json()
+    user = User.query.get(session['user_id'])
+    
+    if not user:
+        return jsonify({'success': False, 'message': 'User not found'}), 404
+    
+    try:
+        # Update user fields
+        if 'first_name' in data and 'last_name' in data:
+            user.full_name = f"{data['first_name']} {data['last_name']}"
+        if 'phone_number' in data:
+            user.phone_number = data['phone_number']
+        if 'birth_date' in data:
+            user.birth_date = datetime.strptime(data['birth_date'], '%Y-%m-%d').date()
+        
+        db.session.commit()
+        return jsonify({
+            'success': True, 
+            'message': 'Profile updated successfully',
+            'user': {
+                'full_name': user.full_name,
+                'phone_number': user.phone_number,
+                'birth_date': user.birth_date.strftime('%Y-%m-%d') if user.birth_date else None
+            }
+        })
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': 'An error occurred while updating profile'}), 500
 
 if __name__ == '__main__':
     with app.app_context():
